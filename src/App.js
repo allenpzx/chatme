@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Login from './views/login/login.jsx';
 import Main from './views/main/main.jsx';
 export default class App extends React.Component {

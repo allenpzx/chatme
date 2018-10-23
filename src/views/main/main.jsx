@@ -14,6 +14,7 @@ export default class Main extends React.Component {
             <Route exact path='/home' component={Home} />
             <Route path='/message' component={Message} />
             <Route path='/mine' component={Mine} />
+            <Redirect to='/home' />
         </Switch>
         <BottomNav {...this.props}/>
       </div>
