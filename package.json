@@ -17,7 +17,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "./node_modules/.bin/babel server --out-dir lib"
+    "server": "./node_modules/.bin/babel server --out-dir lib",
+    "server1": "nodemon --exec babel-node server/server.js",
+    "server2": "nodemon --exec @babel/node server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -34,6 +36,7 @@
     "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "cross-env": "^5.2.0",
     "nodemon": "^1.18.4"
   }
 }
