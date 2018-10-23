@@ -1,7 +1,9 @@
-const path = require('path');
+require("@babel/polyfill");
+// const path = require('path');
 const express = require('express');
+const React = require('react');
 const Provider = require('react-redux');
-const renderToString = require('react-dom/server');
+const ReactDOMServer = require('react-dom/server');
 const store = require('../src/store/index.js');
 const BrowserRouter = ("react-router-dom");
 const app = express();
@@ -12,16 +14,7 @@ app.use('/static', express.static('static'));
 app.use(handleRender);
 
 function handleRender(req, res) {
-
-    // 如果存在的话，从 request 读取 counter
-    const params = qs.parse(req.query);
-    const counter = parseInt(params.counter, 10) || 0;
-    // 得到初始 state
-    let preloadedState = { counter }
-    // 创建新的 Redux store 实例
-    const store = createStore(counterApp, preloadedState)
-
-    const html = renderToString(
+    const html = ReactDOMServer.renderToString(
       <Provider store={store}>
         <BrowserRouter>
             <App />
@@ -53,3 +46,5 @@ function renderFullPage(html, preloadedState) {
 }
 
 app.listen(port);
+
+console.log('express app is listen on port 9093');
