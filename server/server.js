@@ -24,25 +24,30 @@ const User = mongoose.model('user', new mongoose.Schema({
 }));
 
 const addUser = user => {
-  User.create({
-    name: "allen",
-    age: 24,
-    gender: 'male',
-    wanna: "tender"
-  }, function(err, doc){
-    if(err){
-      console.log(err)
-      return 
-    }else{
-      console.log('insert success', doc);
-    }
-  }) 
+  // User.create({
+  //   name: "allen",
+  //   age: 24,
+  //   gender: 'male',
+  //   wanna: "tender"
+  // }, function(err, doc){
+  //   if(err){
+  //     console.log(err)
+  //     return 
+  //   }else{
+  //     console.log('insert success', doc);
+  //   }
+  // }) 
+
+  let someone = new User();
+  someone.name = "ceshi name";
+  someone.age = 18;
+  someone.gender = 'male';
+  someone.wanna = 'girl';
+
 }
 
-addUser()
-
 const removeUser = user => {
-  User.deleteOne({age: 24}, function(err, doc){
+  User.deleteOne({gender: "male"}, function(err, doc){
     if(err){
       console.log(err);
     }else{
@@ -52,7 +57,7 @@ const removeUser = user => {
   })
 }
 
-// removeUser()
+removeUser()
 
 app.get('/user', function (req, res){
   User.find({}, function (err, doc){
