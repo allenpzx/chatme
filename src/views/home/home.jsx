@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import * as fn from '../../store/actions/count.js';
 class Home extends React.Component {
   render() {
-    console.log(this.props);
     return (
       <div className="home">
         <h3>Home</h3>
@@ -15,7 +14,6 @@ class Home extends React.Component {
         <button onClick={()=>{
           this.props.add(1)
         }}>+</button>
-
         <button onClick={()=>{
           this.props.delayAdd(1)
         }}>delay+</button>
