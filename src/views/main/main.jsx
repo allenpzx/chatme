@@ -13,8 +13,8 @@ export default class Main extends React.Component {
         <TransitionGroup>
           <CSSTransition key={this.props.location.key} classNames="fade" timeout={300}>
             <Switch location={this.props.location}>
-              <Route exact path='/' component={Home} />
-              <Route exact path='/home' component={Home} />
+              <Route path='/' component={Home} />
+              <Route path='/home' component={Home} />
               <Route path='/message' component={Message} />
               <Route path='/mine' component={Mine} />
             </Switch>

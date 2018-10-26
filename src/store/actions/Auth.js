@@ -1,8 +1,8 @@
-import axios from 'axios';
+import fetcher from '../../utils/axios.js';
 
 export const getUser = dispatch => {
     dispatch({type: 'GET_USER_STAR'});
-    axios.get('/api/all-user')
+    fetcher.get('/all-user')
     .then(res=>{
         dispatch({type: 'GET_USER_SUCCESS', payload: res});
     })

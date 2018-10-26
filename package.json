@@ -130,11 +130,5 @@
         }
       ]
     ]
-  },
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:9093",
-      "ws": true
-    }
   }
 }

@@ -96,17 +96,7 @@ app.get('/user', function (req, res){
 
 app.get('/api/all-user', function (req, res){
 
-  // let who = new User({
-  //   name: 'whose',
-  //   age: 18,
-  //   gender: 'male',
-  //   wanna: 'test'
-  // })
-  // who.save(function (err){
-  //   if(err) console.log(err);
-  //   console.log('save successed');
-  // })
-
+  console.log('ceshi get all user')
   User.find({}, function (err, doc){
     if(err) console.log(err);
     res.json(doc);
