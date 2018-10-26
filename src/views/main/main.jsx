@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import './main.css';
 import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
 import Home from '../home/home.jsx';
@@ -13,10 +13,10 @@ export default class Main extends React.Component {
         <TransitionGroup>
           <CSSTransition key={this.props.location.key} classNames="fade" timeout={300}>
             <Switch location={this.props.location}>
+              <Route exact path='/' component={Home} />
               <Route exact path='/home' component={Home} />
               <Route path='/message' component={Message} />
               <Route path='/mine' component={Mine} />
-              <Redirect to='/home' />
             </Switch>
           </CSSTransition>
         </TransitionGroup>

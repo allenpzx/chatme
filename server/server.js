@@ -11,10 +11,10 @@ const mongoose = require('mongoose');
 const DB_URL = 'mongodb://localhost:27017';
 mongoose.connect(`${DB_URL}${dbName}`, { useNewUrlParser: true });
 var db = mongoose.connection;
-db.on('connected', ()=>{
-  console.log(`db ${dbName} is connected`);
-})
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+// db.on('connected', ()=>{
+//   console.log(`db ${dbName} is connected`);
+// })
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const userScheme = new mongoose.Schema({
   name: {type: String, required: true},
@@ -30,6 +30,13 @@ userScheme.virtual('allDetail').get(function (){
   return this.name + ' ' + this.age + ' ' + this.gender + ' ' + this.wanna
 })
 const User = mongoose.model('user', userScheme);
+
+const showDB = () => {
+  User.find({}, function (err, doc){
+    console.log('users', doc)
+  });
+}
+// showDB()
 
 const addUser = user => {
   let someone = new User({
@@ -63,15 +70,22 @@ const showUser = () => {
 }
 
 const test = () => {
-  let sm = new User({
-    name : "pre test",
-    age : 20,
-    gender : 'male',
-    wanna : 'girl'
-  });
 
-  console.log('allDetail', sm.allDetail);
+  // User.findById('5bd15dc29386821ad6c53152', function (err, doc){
+  //   doc.name = 'test for update name!!!';
+  //   doc.save(function (err, updatedTank) {
+  //     // if (err) return handleError(err);
+  //     // res.send(updatedTank)
+  //   })
+  // })
+  // User.update({_id: '5bd15df49386821ad6c53153'}, {$set: {name: 'test for update directly'}}, function (err, doc){
+  //   console.log('test update callback', doc)
+  // })
+  User.find({_id: '5bd00dc9c666cb9c745ddd39'}).update({name: 'update name'}, function (err, result){
+    console.log('deleted result', result)
+  })
 }
+test();
 
 app.get('/user', function (req, res){
   User.find({}, function (err, doc){
@@ -80,25 +94,23 @@ app.get('/user', function (req, res){
   });
 })
 
-app.get('/data', function (req, res){
-  // User.findOne({}, function (err, doc){
-  //   console.log('users', doc)
-  //   res.json(doc);
-  // });
+app.get('/api/all-user', function (req, res){
 
-  // let who = new userScheme({
+  // let who = new User({
   //   name: 'whose',
   //   age: 18,
   //   gender: 'male',
   //   wanna: 'test'
   // })
+  // who.save(function (err){
+  //   if(err) console.log(err);
+  //   console.log('save successed');
+  // })
 
-  var sampleSchema = new userScheme({ name: { type: String, required: true } });
-  console.log(sampleSchema.path('name'));
-  res.json(sampleSchema.path('name'))
-  // User.find(function (err, doc){
-  //   res.json(doc);
-  // });
+  User.find({}, function (err, doc){
+    if(err) console.log(err);
+    res.json(doc);
+  })
 })
 
 
@@ -192,4 +204,4 @@ const indexCollection = function(db, callback) {
 
 app.listen(port);
 
-console.log(`express app is listen on port ${port}`); 
+// console.log(`express app is listen on port ${port}`); 

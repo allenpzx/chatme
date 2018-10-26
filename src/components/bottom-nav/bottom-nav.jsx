@@ -5,7 +5,7 @@ export default class BottomNav extends Component {
 
     render() {
         const pn = this.props.location && this.props.location.pathname ? this.props.location.pathname : null;
-        const isHome = pn && pn.includes('/home');
+        const isHome = pn && (pn.includes('/home') || /^\/$/.test(pn));
         const isMessage = pn && pn.includes('/message');
         const isMine = pn && pn.includes('/mine');
         return (
