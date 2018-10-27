@@ -17,6 +17,8 @@ class Home extends React.Component {
         <button onClick={()=>{
           this.props.delayAdd(1)
         }}>delay+</button>
+
+        <hr/>
       </div>
     );
   }

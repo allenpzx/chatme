@@ -85,7 +85,7 @@ const test = () => {
     console.log('deleted result', result)
   })
 }
-test();
+// test();
 
 app.get('/user', function (req, res){
   User.find({}, function (err, doc){
@@ -95,70 +95,70 @@ app.get('/user', function (req, res){
 })
 
 app.get('/api/all-user', function (req, res){
-
-  console.log('ceshi get all user')
   User.find({}, function (err, doc){
-    if(err) console.log(err);
+    if(err) {
+      res.json({data: 1001, message: `${req} something was wrong`})
+    };
     res.json(doc);
   })
 })
 
 
-const insertDocuments = function(db, callback) {
-  // Get the documents collection
-  const collection = db.collection('documents');
-  // Insert some documents
-  collection.insertMany([
-    {a : 1}, {a : 2}, {a : 3}
-  ], function(err, result) {
-    assert.equal(err, null);
-    assert.equal(3, result.result.n);
-    assert.equal(3, result.ops.length);
-    console.log("Inserted 3 documents into the collection", result);
-    callback(result);
-  });
-}
+// const insertDocuments = function(db, callback) {
+//   // Get the documents collection
+//   const collection = db.collection('documents');
+//   // Insert some documents
+//   collection.insertMany([
+//     {a : 1}, {a : 2}, {a : 3}
+//   ], function(err, result) {
+//     assert.equal(err, null);
+//     assert.equal(3, result.result.n);
+//     assert.equal(3, result.ops.length);
+//     console.log("Inserted 3 documents into the collection", result);
+//     callback(result);
+//   });
+// }
 
-const findDocuments = function(db, callback) {
-  const collection = db.collection('documents');
-  collection.find({}).toArray(function(err, docs) {
-    assert.equal(err, null);
-    console.log("Found the following records");
-    console.log(docs)
-    callback(docs);
-  });
-}
+// const findDocuments = function(db, callback) {
+//   const collection = db.collection('documents');
+//   collection.find({}).toArray(function(err, docs) {
+//     assert.equal(err, null);
+//     console.log("Found the following records");
+//     console.log(docs)
+//     callback(docs);
+//   });
+// }
 
-const updateDocument = function(db, callback) {
-  const collection = db.collection('documents');
-  collection.updateOne({ a : 2 }
-    , { $set: { b : 1 } }, function(err, result) {
-    assert.equal(err, null);
-    assert.equal(1, result.result.n);
-    console.log("Updated the document with the field a equal to 2");
-    callback(result);
-  });
-}
+// const updateDocument = function(db, callback) {
+//   const collection = db.collection('documents');
+//   collection.updateOne({ a : 2 }
+//     , { $set: { b : 1 } }, function(err, result) {
+//     assert.equal(err, null);
+//     assert.equal(1, result.result.n);
+//     console.log("Updated the document with the field a equal to 2");
+//     callback(result);
+//   });
+// }
 
-const removeDocument = function(db, callback) {
-  const collection = db.collection('documents');
-  collection.deleteOne({ a : 2, b: 1 }, function(err, result) {
-    assert.equal(err, null);
-    assert.equal(1, result.result.n);
-    callback(result);
-  });
-}
+// const removeDocument = function(db, callback) {
+//   const collection = db.collection('documents');
+//   collection.deleteOne({ a : 2, b: 1 }, function(err, result) {
+//     assert.equal(err, null);
+//     assert.equal(1, result.result.n);
+//     callback(result);
+//   });
+// }
 
-const indexCollection = function(db, callback) {
-  db.collection('documents').createIndex(
-    { "a": 1 },
-      null,
-      function(err, results) {
-        console.log(results);
-        callback();
-    }
-  );
-};
+// const indexCollection = function(db, callback) {
+//   db.collection('documents').createIndex(
+//     { "a": 1 },
+//       null,
+//       function(err, results) {
+//         console.log(results);
+//         callback();
+//     }
+//   );
+// };
 
 // function handleRender(req, res) {
 //     const html = ReactDOMServer.renderToString(
@@ -194,4 +194,4 @@ const indexCollection = function(db, callback) {
 
 app.listen(port);
 
-// console.log(`express app is listen on port ${port}`); 
+console.log(`express app is listented on port ${port}`); 
