@@ -1,7 +1,8 @@
 
 ## Base
 
-React + Redux + React Router + Immutable + Express
+FE: React + Redux + React Router + Immutable 
+BE: Express + MongoDB
 
 
 
