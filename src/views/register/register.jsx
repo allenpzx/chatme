@@ -26,7 +26,7 @@ class Register extends React.Component {
     render() {
         return (
             <From>
-                <div className='login-title'><h1>注册</h1></div>
+                <div className='login-titl e'><h1>注册</h1></div>
                 <form className="login-form" action="/main">
                     <label htmlFor="register-account">
                         <span>账号: </span>
