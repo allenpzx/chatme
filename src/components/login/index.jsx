@@ -1,2 +1,5 @@
 import './index.css';
-export default loginForm = ({child}) => <div className="login">{this.props.child}</div>
+export default loginForm = ({child}) => {
+    console.log(child);
+    return <div className="login">{this.props.child}</div>
+}

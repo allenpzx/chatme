@@ -1,8 +1,9 @@
 
 ## Base
 
-FE: React + Redux + React Router + Immutable 
-BE: Express + MongoDB
+客户端: React + Redux + React Router + Immutable 
+
+服务端: Express + MongoDB
 
 
 
