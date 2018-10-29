@@ -31,8 +31,6 @@ export default withRouter(connect(
     user: state.Auth
   }),
   dispatch=>({
-    getUser: ()=>{
-      getUser(dispatch);
-    }
+    getUser: ()=>getUser(dispatch)
   })
 )(App))

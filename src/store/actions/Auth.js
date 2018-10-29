@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getUser = dispatch => {
     dispatch({type: 'GET_USER_STAR'});
-    axios.get('/api/all-user')
+    axios.get('/api/v1/user')
     .then(res=>{
         dispatch({type: 'GET_USER_SUCCESS', payload: res});
     })

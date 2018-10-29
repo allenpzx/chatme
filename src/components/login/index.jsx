@@ -1,5 +1,5 @@
+import React from 'react'
 import './index.css';
-export default loginForm = ({child}) => {
-    console.log(child);
-    return <div className="login">{this.props.child}</div>
+export default class loginForm extends React.Component {
+    render(){return <div className="login">{this.props.children}</div>}
 }

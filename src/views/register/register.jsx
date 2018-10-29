@@ -1,40 +1,50 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+import { withRouter } from "react-router-dom";
 import { register } from '../../store/actions/Auth.js';
-import { Button } from 'antd-mobile';
-import From from '../login/login.jsx';
+import { Button, List, Radio, WhiteSpace } from 'antd-mobile';
+import LoginFrom from '../../components/login/index.jsx';
 
 class Register extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             account: '',
             password: '',
-            repeatPassword: ''
+            repeatPassword: '',
+            gender: 'male'
         }
     }
 
-    handleAccount = (e) => this.setState({account: e.target.value});
+    handleAccount = (e) => this.setState({ account: e.target.value });
 
-    handlePassword = (e) => this.setState({password: e.target.value});
+    handlePassword = (e) => this.setState({ password: e.target.value });
 
-    handleRepeatPassword = (e) => this.setState({repeatPassword: e.target.value});
+    handleRepeatPassword = (e) => this.setState({ repeatPassword: e.target.value });
 
-    handleRegister = (e) => this.props.register(this.state);
+    handleRegister = (e) => {
+        console.log(this.state);
+    }
+
+    handleGender = (e) => {
+        e.preventDefault();
+        const v = e.target.dataset.value;
+        this.setState({ gender: v});
+    }
 
     render() {
         return (
-            <From>
-                <div className='login-titl e'><h1>注册</h1></div>
-                <form className="login-form" action="/main">
+            <LoginFrom>
+                <div className='login-title'><h1>注册</h1></div>
+                <div className="login-form">
                     <label htmlFor="register-account">
                         <span>账号: </span>
-                        <input 
+                        <input
                             onChange={this.handleAccount}
                             value={this.state.account}
-                            id='register-account' 
-                            type="text" 
+                            id='register-account'
+                            type="text"
                         />
                     </label>
                     <label htmlFor="register-password">
@@ -45,29 +55,34 @@ class Register extends React.Component {
                         <span>确认密码: </span>
                         <input id='repeat-password' type="text" />
                     </label>
+
+                    <div className='radio-group'>
+                        <div className='radio-title'>请选择性别</div>
+                        <div className='radio-item' data-ischeck={this.state.gender === 'male'} data-value='male' onClick={(e)=>this.handleGender(e)}>男</div>
+                        <div className='radio-item' data-ischeck={this.state.gender === 'female'} data-value='female' onClick={(e)=>this.handleGender(e)}>女</div>
+                    </div>
+
                     <div className='error-message'></div>
 
-                    <div className='login-error'></div>
+                    <Button id='login-submit' type="primary">注册</Button>
 
-                    <Button id='login-submit'  type="primary">登录</Button>
-
-                    <div onClick={this.handleRegister} className='form-bottom'>
+                    <div onClick={() => this.props.history.push('/login')} className='form-bottom'>
                         <button>登录</button>
                     </div>
-                </form>
-            </From>
+                </div>
+            </LoginFrom>
         );
     }
 };
 
 
-export default connect(
-    state=>({
+export default withRouter(connect(
+    state => ({
         user: state.Auth
     }),
-    dispatch=>({
-        register: (props)=>{
+    dispatch => ({
+        register: (props) => {
             register(props);
         }
     })
-)(Register)
+)(Register))

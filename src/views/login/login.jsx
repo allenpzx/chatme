@@ -1,8 +1,10 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { login } from '../../store/actions/Auth.js';
 import './login.css';
 import { Button } from 'antd-mobile';
+import LoginForm from '../../components/login/index.jsx';
 
 class Login extends React.Component {
 
@@ -24,7 +26,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div className="login">
+            <LoginForm>
                 <div className='login-title'><h1>登录</h1></div>
                 <form id="login-form" action="/main">
                     <label htmlFor="account">
@@ -44,20 +46,20 @@ class Login extends React.Component {
 
                     <div className='login-error'></div>
 
-                    <Button id='login-submit'  type="primary">登录</Button>
+                    <Button id='login-submit' type="primary">登录</Button>
 
                     <div className='form-bottom'>
-                        <button>注册</button>
+                        <button onClick={()=>this.props.history.push('/register')}>注册</button>
                         <button>忘记密码</button>
                     </div>
                 </form>
-            </div>
+            </LoginForm>
         );
     }
 };
 
 
-export default connect(
+export default withRouter(connect(
     state=>({
         user: state.Auth
     }),
@@ -66,4 +68,4 @@ export default connect(
             login(props);
         }
     })
-)(Login)
+)(Login))

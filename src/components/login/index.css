@@ -3,7 +3,7 @@
     height: 100vh;
     overflow: hidden;
     box-sizing: border-box;
-    padding-top: 180px;
+    padding-top: 30%;
 }
 
 .login-title{
@@ -55,4 +55,35 @@
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
+}
+
+.radio-group{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: space-between;
+}
+
+.radio-group .radio-title{
+    margin: 10px 0 2px 0;
+    padding: 10px;
+    color: grey;
+}
+
+.radio-group .radio-item {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    margin-bottom: 5px;
+    outline: none;
+    border: none;
+}
+
+.radio-group .radio-item[data-ischeck='true']::after{
+    content: '✓';
+    position: absolute;
+    right: 10px;
+    color: #108ee9;
 }
