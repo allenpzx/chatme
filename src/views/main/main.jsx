@@ -5,6 +5,7 @@ import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
 import Home from '../home/home.jsx';
 import Message from '../message/message.jsx';
 import Mine from '../mine/mine.jsx';
+
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 export default class Main extends React.Component {
   render() {
