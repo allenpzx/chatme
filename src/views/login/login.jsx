@@ -50,7 +50,6 @@ class Login extends React.Component {
 
                     <div className='form-bottom'>
                         <button onClick={()=>this.props.history.push('/register')}>注册</button>
-                        <button>忘记密码</button>
                     </div>
                 </form>
             </LoginForm>

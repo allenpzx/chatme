@@ -28,17 +28,34 @@ export const login = dispatch => props => {
 }
 
 export const register = dispatch => props => {
-    dispatch({type: 'REGISTER_STAR'});
+
+    const errorMsg = msg => {
+        return {type: 'REGISTER_ERROR', message: msg}
+    }
+
+    if(!props.account || !props.password || !props.gender){
+        dispatch(errorMsg('请填写完整'));
+        return 
+    }
+    if(props.password !== props.repeatPassword){
+        dispatch(errorMsg('密码和确认密码不同'));
+        return 
+    }
+
+    dispatch({type: 'REGISTER_STAR', payload: {message: '注册开始'}});
     axios.post('/api/v1/register', {
         data: {
             account: props.account,
-            password: props.password
+            password: props.password,
+            gender: props.gender
         }
     })
     .then(res=>{
-        dispatch({type: 'REGISTER_SUCCESS', payload: res});
+        res.status === 200 && res.data.code === 1
+        ? dispatch({type: 'REGISTER_SUCCESS', payload: res})
+        : dispatch(errorMsg(res.data.message));
     })
     .catch(err=>{
-        dispatch({type: 'REGISTER_ERROR', payload: err});
+        dispatch({type: 'REGISTER_ERROR', payload: {message: err}});
     })
 }

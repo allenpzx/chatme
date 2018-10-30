@@ -87,3 +87,10 @@
     right: 10px;
     color: #108ee9;
 }
+
+.inputError{
+    width: 100%;
+    padding: 10px;
+    color: red;
+    text-align: center;
+}

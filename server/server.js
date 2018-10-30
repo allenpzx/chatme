@@ -1,78 +1,89 @@
 const express = require('express');
 const app = express();
 const port = 9093;
-const userRouter = require('./user.router.js');
+const userRouter = require('./api/v1/user.js');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-app.use('/user', userRouter);
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use('/api/v1', userRouter);
 
-app.use('/static', express.static('static'));
-
-// const MongoClient = require('mongodb').MongoClient;
-const mongoose = require('mongoose');
-const DB_Name = 'chatme';
-const DB_URL = 'mongodb://localhost:27017';
-mongoose.connect(`${DB_URL}${DB_Name}`, { useNewUrlParser: true });
-const db = mongoose.connection;
-
-const userScheme = new mongoose.Schema({
-  name: {type: String, required: true},
-  age: {type: Number, required: true},
-  gender: {type: String, required: true},
-  wanna: {type: String, required: true}
-});
-userScheme.methods.talkName = function (cb){
-  console.log('this.name', this.name);
-  cb && cb();
-};
-userScheme.virtual('allDetail').get(function (){
-  return this.name + ' ' + this.age + ' ' + this.gender + ' ' + this.wanna
-})
-const User = mongoose.model('user', userScheme);
-
-const addUser = user => {
-  let someone = new User({
-    name : "ceshi name",
-    age : 18,
-    gender : 'male',
-    wanna : 'girl'
-  });
-  someone.save(function (err, arg){
-    if(err) return console.error(err);
-    console.log('save user successful', arg);
-  })
-  someone.talkName();
-}
-
-const updateUser = props => {
-  User.find(props, function (err, docs){
-
-  })
-}
-
-const removeUser = props => {
-  User.deleteOne(props, function(err, doc){
-    if(err){
-      console.log('removeUser error', err);
-      return 
-    }else{
-      console.log('removeUser success', doc);
-
-    }
-  })
-}
-
-const showUser = props => {
-  User.find(props, function (err, users){
-    if (err) return console.error(err);
-    console.log('show users', users);
-  })
-}
 
 // app.get('/api/v1/user', function (req, res){
 //   User.find({}, function (err, doc){
 //     res.json(doc);
 //   });
 // })
+
+// app.use('/static', express.static('static'));
+
+// const mongoose = require('mongoose');
+// const DB_Name = 'chatme';
+// const DB_URL = 'mongodb://localhost:27017';
+// mongoose.connect(`${DB_URL}${DB_Name}`, { useNewUrlParser: true });
+// const db = mongoose.connection;
+
+// const userScheme = new mongoose.Schema({
+//   name: {type: String, required: true},
+//   age: {type: Number, required: true},
+//   gender: {type: String, required: true},
+//   wanna: {type: String, required: true}
+// });
+// userScheme.methods.talkName = function (cb){
+//   console.log('this.name', this.name);
+//   cb && cb();
+// };
+// userScheme.virtual('allDetail').get(function (){
+//   return this.name + ' ' + this.age + ' ' + this.gender + ' ' + this.wanna
+// })
+// const User = mongoose.model('user', userScheme);
+
+// const addUser = user => {
+//   let someone = new User({
+//     name : "ceshi name",
+//     age : 18,
+//     gender : 'male',
+//     wanna : 'girl'
+//   });
+//   someone.save(function (err, arg){
+//     if(err) return console.error(err);
+//     console.log('save user successful', arg);
+//   })
+//   someone.talkName();
+// }
+
+// const updateUser = props => {
+//   User.find(props, function (err, docs){
+
+//   })
+// }
+
+// const removeUser = props => {
+//   User.deleteOne(props, function(err, doc){
+//     if(err){
+//       console.log('removeUser error', err);
+//       return 
+//     }else{
+//       console.log('removeUser success', doc);
+
+//     }
+//   })
+// }
+
+// const showUser = props => {
+//   User.find(props, function (err, users){
+//     if (err) return console.error(err);
+//     console.log('show users', users);
+    // User.remove({}, function (err, doc){
+    //   if(err)console.log('remove model user error')
+
+    //   console.log('remove user model success', doc);
+    // })
+//   })
+// }
+
+// showUser();
 
 app.listen(port, function (){
   console.log(`express app is listented on port ${port}`); 

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { register } from '../../store/actions/Auth.js';
-import { Button, List, Radio, WhiteSpace } from 'antd-mobile';
+import { Button } from 'antd-mobile';
 import LoginFrom from '../../components/login/index.jsx';
 
 class Register extends React.Component {
@@ -13,7 +13,8 @@ class Register extends React.Component {
             account: '',
             password: '',
             repeatPassword: '',
-            gender: 'male'
+            gender: 'male',
+            inputError: null
         }
     }
 
@@ -23,17 +24,38 @@ class Register extends React.Component {
 
     handleRepeatPassword = (e) => this.setState({ repeatPassword: e.target.value });
 
-    handleRegister = (e) => {
-        console.log(this.state);
-    }
-
     handleGender = (e) => {
         e.preventDefault();
         const v = e.target.dataset.value;
         this.setState({ gender: v});
     }
 
+    handleRegister = (e) => {
+        const list = {
+            account: '用户名',
+            password: '密码',
+            repeatPassword: '确认密码',
+            gender: '性别'
+        }
+        let obj = {};
+        for(let [k,v] of Object.entries(this.state)){
+            if(k === 'inputError')continue
+            obj[k]=v;
+            if(!(v && v.replace(/\s+/g,"") !== '')){ 
+                this.setState({inputError: `${list[k]}请正确填写`});
+                return 
+            }
+        }
+        if(this.state.password !== this.state.repeatPassword){
+            this.setState({inputError: '密码和确认密码请保持一致'})
+            return 
+        }
+        this.setState({inputError: null});
+        this.props.register(obj);
+    }
+
     render() {
+        const user = this.props.user || null;
         return (
             <LoginFrom>
                 <div className='login-title'><h1>注册</h1></div>
@@ -49,11 +71,21 @@ class Register extends React.Component {
                     </label>
                     <label htmlFor="register-password">
                         <span>密码: </span>
-                        <input id='register-password' type="text" />
+                        <input 
+                            onChange={this.handlePassword}
+                            value={this.state.password} 
+                            id='register-password' 
+                            type="text" 
+                        />
                     </label>
                     <label htmlFor="repeat-password">
                         <span>确认密码: </span>
-                        <input id='repeat-password' type="text" />
+                        <input 
+                            onChange={this.handleRepeatPassword}
+                            value={this.state.repeatPassword} 
+                            id='repeat-password' 
+                            type="text" 
+                        />
                     </label>
 
                     <div className='radio-group'>
@@ -62,9 +94,12 @@ class Register extends React.Component {
                         <div className='radio-item' data-ischeck={this.state.gender === 'female'} data-value='female' onClick={(e)=>this.handleGender(e)}>女</div>
                     </div>
 
-                    <div className='error-message'></div>
-
-                    <Button id='login-submit' type="primary">注册</Button>
+                    {this.state.inputError && <div className='inputError'>{this.state.inputError}</div>}
+                    {/* {   user && user.message
+                        ? <div className='registerError'>{user.message}</div>
+                        : null
+                    } */}
+                    <Button onClick={this.handleRegister} id='login-submit' type="primary">注册</Button>
 
                     <div onClick={() => this.props.history.push('/login')} className='form-bottom'>
                         <button>登录</button>
@@ -78,11 +113,11 @@ class Register extends React.Component {
 
 export default withRouter(connect(
     state => ({
-        user: state.Auth
+        user: state.user
     }),
     dispatch => ({
         register: (props) => {
-            register(props);
+            register(dispatch)(props);
         }
     })
 )(Register))
