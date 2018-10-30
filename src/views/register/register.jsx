@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-import { register } from '../../store/actions/Auth.js';
+import { register } from '../../store/actions/user.js';
 import { Button } from 'antd-mobile';
 import LoginFrom from '../../components/login/index.jsx';
 
@@ -55,6 +55,7 @@ class Register extends React.Component {
     }
 
     render() {
+        console.log(this.props)
         const user = this.props.user || null;
         return (
             <LoginFrom>
@@ -95,10 +96,10 @@ class Register extends React.Component {
                     </div>
 
                     {this.state.inputError && <div className='inputError'>{this.state.inputError}</div>}
-                    {/* {   user && user.message
+                    {   user && user.message
                         ? <div className='registerError'>{user.message}</div>
                         : null
-                    } */}
+                    }
                     <Button onClick={this.handleRegister} id='login-submit' type="primary">注册</Button>
 
                     <div onClick={() => this.props.history.push('/login')} className='form-bottom'>

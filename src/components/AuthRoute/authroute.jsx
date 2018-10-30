@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {getUser} from '../../store/actions/Auth.js';
+import {getUser} from '../../store/actions/user.js';
 class AuthRoute extends React.Component{
     componentDidMount(){
         const publicList = ['/login', '/register'];

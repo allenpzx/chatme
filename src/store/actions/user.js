@@ -51,11 +51,20 @@ export const register = dispatch => props => {
         }
     })
     .then(res=>{
+        console.log(res)
+        if(res.data.code === 0){
+
+        }
+
         res.status === 200 && res.data.code === 1
         ? dispatch({type: 'REGISTER_SUCCESS', payload: res})
         : dispatch(errorMsg(res.data.message));
     })
     .catch(err=>{
-        dispatch({type: 'REGISTER_ERROR', payload: {message: err}});
+        console.log(err.response)
+        const res = err.response.data;
+        if(res.code === 0 && res.message){
+            dispatch({type: 'REGISTER_ERROR', payload: {message: res.message}});
+        }
     })
 }

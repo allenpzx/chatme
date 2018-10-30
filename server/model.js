@@ -8,12 +8,12 @@ const models = {
     user: {
         'account': {'type': String, 'required': true},
         'password': {'type': String, 'required': true},
-        'name': {'type': String, 'required': true},
-        'age': {'type': Number, 'required': true},
+        'name': {'type': String},
+        'age': {'type': Number},
         'gender': {'type': String, 'required': true},
         'avatar': {'type': String},
         'description': {'type': String},
-        'wanna': {'type': String, 'required': true},
+        'wanna': {'type': String},
     },
     chat: {
 

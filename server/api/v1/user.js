@@ -13,15 +13,17 @@ Router.post('/register', function (req, res){
     console.log(req, req.body, req.body.data);
 
     const {account, password, gender} = req.body.data;
-    User.findOne({user: user}, function (err, doc){
+    console.log(account, password, gender)
+    User.findOne({account}, function (err, doc){
         if(doc){
             return res.json({code: 0, message: '该用户已注册'});
         }
         User.create({account, password, gender}, function (e, d){
             if(e){
-                return res.json({code: 0, message: '注册用户后端出错, 请稍后再试'})
+                console.log('create error', e)
+                return res.status(400).json({code: 0, message: '注册用户服务端出错, 请稍后再试'})
             }
-            return res.json({code: 1, })
+            return res.json({code: 1})
         })
     });
 });
