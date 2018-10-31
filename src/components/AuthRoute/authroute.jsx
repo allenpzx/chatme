@@ -1,8 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {withRouter, Redirect} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import { getUser } from '../../store/actions/user.js';
 class AuthRoute extends React.Component{
+    state={
+        user: this.props.user
+    }
+    
     componentDidMount(){
         const publicList = ['/login', '/register'];
         const pathname = this.props.location.pathname;
@@ -11,14 +15,15 @@ class AuthRoute extends React.Component{
         }
         this.props.getUser();
     }
-    render(){
-        const user = this.props.user || null;
-        const redirectTo  = user.redirectTo || null;
-        const Target = () => {
-            return redirectTo ? <Redirect to={redirectTo} /> : null;
+
+    static getDerivedStateFromProps(props, state){
+        if(props.user !== state.user){
+            props.history.push(props.user.redirectTo);
         }
-        return <Target />
+        return null
     }
+
+    render(){return null}
 }
 
 export default withRouter(connect(

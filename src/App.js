@@ -11,7 +11,7 @@ class App extends React.Component {
       <React.Fragment>
         <AuthRoute />
         <Switch>
-          <Route exact path='/' component={Main} />
+          <Route path='/' component={Main} />
           <Route exact path='/login' component={Login} />
           <Route exact path='/register' component={Register} />
         </Switch>

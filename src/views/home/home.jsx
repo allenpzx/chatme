@@ -3,14 +3,6 @@ import './home.css';
 import { connect } from 'react-redux';
 import * as fn from '../../store/actions/count.js';
 
-const man = () =>{
-  return <div>this is man</div>
-}
-
-const women = () =>{
-  return <div>this is women</div>
-}
-
 class Home extends React.Component {
   render() {
     return (

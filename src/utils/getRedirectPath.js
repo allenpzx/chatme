@@ -1,6 +1,5 @@
 export function getRedirectPath({gender, avatar}){
-    console.log(gender, avatar)
-    let path = gender === 'male' ? '/man' : '/women';
+    let path = gender === 'male' ? '/mine/man' : '/mine/women';
     if(!avatar){
         path += '/info'
     }

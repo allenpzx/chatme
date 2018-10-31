@@ -3,11 +3,24 @@ import {connect} from 'react-redux';
 import { withRouter, Route} from 'react-router-dom'
 
 class Mine extends React.Component {
+
+
   render() {
-    console.log(this.props);
+    const user = this.props.user || null;
+    const path = this.props.location.pathname || null;
+    const Man = () => <div>man</div>;
+    const Women = () => <div>women</div>;
+    // console.log(this.props);
     return (
       <div className="mine">
         <h3>Mine</h3> 
+
+  
+        {
+          path === '/mine/man/info'
+          ? <Man />
+          : path === '/mine/women/info' ? <Women /> : null
+        }
       </div>
     );
   }
