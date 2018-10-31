@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import {getUser} from '../../store/actions/user.js';
+import {withRouter, Redirect} from 'react-router-dom';
+import { getUser } from '../../store/actions/user.js';
 class AuthRoute extends React.Component{
     componentDidMount(){
         const publicList = ['/login', '/register'];
@@ -10,31 +9,23 @@ class AuthRoute extends React.Component{
         if(publicList.indexOf(pathname) > -1){
             return null
         }
-
-        axios.get('/api/v1/user')
-        .then(res=>{
-            console.log(res)
-            if(res.status === 200){
-                const islogin = res.data.code === 1
-                if(islogin){
-
-                }else{
-                    this.props.history.push('/login');
-                }
-            }
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+        this.props.getUser();
     }
-
     render(){
-        return null
+        const user = this.props.user || null;
+        const redirectTo  = user.redirectTo || null;
+        const Target = () => {
+            return redirectTo ? <Redirect to={redirectTo} /> : null;
+        }
+        return <Target />
     }
 }
 
 export default withRouter(connect(
     state=>({
         user: state.user
+    }),
+    dispatch=>({
+        getUser: ()=>getUser(dispatch)
     })
 )(AuthRoute));

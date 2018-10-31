@@ -4,7 +4,14 @@ export const getUser = dispatch => {
     dispatch({type: 'GET_USER_STAR', payload: {message: '获取用户模型开始'}});
     axios.get('/api/v1/user')
     .then(res=>{
-        dispatch({type: 'GET_USER_SUCCESS', payload: res});
+        if(res.status === 200){
+            const islogin = res.data.code === 1
+            if(islogin){
+                dispatch({type: 'GET_USER_SUCCESS', payload: res.data});
+            }else{
+                this.props.history.push('/login');
+            }
+        }
     })
     .catch(err=>{
         dispatch({type: 'GET_USER_ERROR', payload: err.response});
@@ -12,9 +19,6 @@ export const getUser = dispatch => {
 }
 
 export const login = dispatch => props => {
-
-    const {user, pwd} = props;
-
     dispatch({type: 'LOGIN_STAR', payload: {message: '登录开始'}});
     axios.post('/api/v1/login', {
         data: {

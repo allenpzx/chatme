@@ -3,6 +3,7 @@ const Router = express.Router();
 const models = require('../../model.js');
 const User = models.getModel('user');
 const crypto = require('crypto');
+const _filter = {"password": 0, "__v": 0};
 
 const md5 = (str) => {
     str += '*=abc123';
@@ -19,9 +20,25 @@ Router.get('/user-list', function (req, res){
     });
 });
 
+Router.get('/user', function (req, res){
+    const {userid} = req.cookies;
+    if(!userid){
+        return res.json({code: 0});
+    }else{
+        User.findOne({_id: userid}, _filter, function(err, doc){
+            if(err){
+                return res.json({code: 0, message: '服务端正忙, 请稍后再试'});
+            }
+            if(doc){
+                return res.json({code: 1, data: doc, message: '获取用户模型成功'});
+            }
+        });
+    }
+});
+
 Router.post('/login', function (req, res){
     const {account, password} = req.body.data;
-    User.findOne({account, password: md5(password)}, function (err, doc){
+    User.findOne({account, password: md5(password)}, _filter, function (err, doc){
         if(!doc){
             return res.json({code: 0, message: '用户名或密码错误'});
         }else{
@@ -56,22 +73,6 @@ Router.post('/logout', function (req, res){
             return res.json({code: 1, data: doc, message: '登录成功'});
         }
     });
-});
-
-Router.get('/user', function (req, res){
-    const {userid} = req.cookies;
-    if(!userid){
-        return res.json({code: 0});        
-    }else{
-        User.findOne({_id: userid}, function(err, doc){
-            if(err){
-                return res.json({code: 0, message: '服务端正忙, 请稍后再试'});
-            }
-            if(doc){
-                return res.json({code: 1, data: doc, message: '获取用户模型成功'});
-            }
-        });
-    }
 });
 
 module.exports = Router;
