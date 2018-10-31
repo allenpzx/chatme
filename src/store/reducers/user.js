@@ -1,4 +1,7 @@
+import {getRedirectPath} from '../../utils/getRedirectPath.js';
+
 let initialState = {
+    redirectTo: '',
     isAuth: false,
     account: null,
     password: null,
@@ -18,14 +21,26 @@ const user = (state = initialState, action) => {
         case 'REGISTER_STAR':
             return {...state, message: action.payload.message}
         case 'REGISTER_SUCCESS':        
-            return {...state, isAuth: true, ...action.payload}    
+            return {
+                        ...state, 
+                        isAuth: true, 
+                        redirectTo: getRedirectPath(action.payload.data), 
+                        message: '注册成功', 
+                        ...action.payload.data
+                    }   
         case 'REGISTER_ERROR':        
             return {...state, isAuth: false, message: action.payload.message}     
             
         case 'LOGIN_STAR':
             return {...state, message: action.payload.message}
         case 'LOGIN_SUCCESS':        
-            return {...state, isAuth: true, ...action.payload}    
+            return {
+                        ...state, 
+                        isAuth: true, 
+                        redirectTo: getRedirectPath(action.payload.data), 
+                        message: '登录成功', 
+                        ...action.payload
+                    }    
         case 'LOGIN_ERROR':        
             return {...state, isAuth: false, message: action.payload.message}
 

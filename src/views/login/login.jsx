@@ -1,5 +1,5 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { login } from '../../store/actions/user.js';
 import './login.css';
@@ -24,9 +24,19 @@ class Login extends React.Component {
         this.setState({password: e.target.value});
     }
 
+    handleLogin = () => {
+        this.props.login(this.state);
+    }
+
     render() {
+        const user = this.props.user || null;
         return (
             <LoginForm>
+                {
+                    user && user.redirectTo 
+                    ? <Redirect to={user.redirectTo} /> 
+                    : null
+                }
                 <div className='login-title'><h1>登录</h1></div>
                 <form id="login-form" action="/main">
                     <label htmlFor="account">
@@ -40,13 +50,19 @@ class Login extends React.Component {
                     </label>
                     <label htmlFor="password">
                         <span>密码: </span>
-                        <input id='password' type="text" />
+                        <input 
+                            onChange={this.handlePassword}
+                            value={this.state.password}
+                            id='password' 
+                            type="text" 
+                        />
                     </label>
-                    <div className='error-message'></div>
-
-                    <div className='login-error'></div>
-
-                    <Button id='login-submit' type="primary">登录</Button>
+                    {
+                        user && user.message
+                        ? <div className='registerError'>{user.message}</div>
+                        : null
+                    }
+                    <Button onClick={this.handleLogin} id='login-submit' type="primary">登录</Button>
 
                     <div className='form-bottom'>
                         <button onClick={()=>this.props.history.push('/register')}>注册</button>
@@ -60,11 +76,9 @@ class Login extends React.Component {
 
 export default withRouter(connect(
     state=>({
-        user: state.Auth
+        user: state.user
     }),
     dispatch=>({
-        login: (props)=>{
-            login(props);
-        }
+        login: props=>login(dispatch)(props)
     })
 )(Login))

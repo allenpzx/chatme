@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import { register } from '../../store/actions/user.js';
 import { Button } from 'antd-mobile';
 import LoginFrom from '../../components/login/index.jsx';
@@ -55,10 +55,14 @@ class Register extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         const user = this.props.user || null;
         return (
             <LoginFrom>
+                {
+                    user && user.redirectTo 
+                    ? <Redirect to={user.redirectTo} /> 
+                    : null
+                }
                 <div className='login-title'><h1>注册</h1></div>
                 <div className="login-form">
                     <label htmlFor="register-account">
@@ -76,7 +80,7 @@ class Register extends React.Component {
                             onChange={this.handlePassword}
                             value={this.state.password} 
                             id='register-password' 
-                            type="text" 
+                            type="password" 
                         />
                     </label>
                     <label htmlFor="repeat-password">
@@ -85,7 +89,7 @@ class Register extends React.Component {
                             onChange={this.handleRepeatPassword}
                             value={this.state.repeatPassword} 
                             id='repeat-password' 
-                            type="text" 
+                            type="password" 
                         />
                     </label>
 

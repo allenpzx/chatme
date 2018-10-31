@@ -1,9 +1,13 @@
+## Info
+
+  简单的在线实时聊天应用
+
 
 ## Base
 
-客户端: React + Redux + React Router + Immutable 
+客户端: React 16 + Redux 4 + React Router 4 + Immutable 4
 
-服务端: Express + MongoDB
+服务端: Express 4 + MongoDB 3
 
 
 
@@ -17,8 +21,7 @@ chatme/
   node_modules/
   package.json
   public/
-    index.html
-    favicon.ico
+  server/
   src/
     components
     views
