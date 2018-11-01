@@ -1,23 +1,26 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './main.css';
 import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
 import Home from '../home/home.jsx';
 import Message from '../message/message.jsx';
 import Mine from '../mine/mine.jsx';
-
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-export default class Main extends React.Component {
+import { NavBar, Icon } from 'antd-mobile';
+import Header from '../../components/header/header.jsx';
+class Main extends React.Component {
   render() {
     return (
       <div className="Main">
+
+        <Header />
+
         <TransitionGroup>
           <CSSTransition key={this.props.location.key} classNames="fade" timeout={300}>
             <Switch location={this.props.location}>
-              <Route exact path='/' component={Home} />
-              <Route path='/home' component={Home} />
-              <Route path='/message' component={Message} />
-              <Route path='/mine' component={Mine} />
+              <Route path='/index/home' component={Home} />
+              <Route path='/index/message' component={Message} />
+              <Route path='/index/mine' component={Mine} />
             </Switch>
           </CSSTransition>
         </TransitionGroup>
@@ -27,3 +30,4 @@ export default class Main extends React.Component {
     );
   }
 }
+export default withRouter(Main);

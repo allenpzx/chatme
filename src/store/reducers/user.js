@@ -4,7 +4,6 @@ let initialState = {
     redirectTo: '',
     isAuth: false,
     account: null,
-    password: null,
     message: null,
     gender: null
 };

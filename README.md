@@ -5,7 +5,7 @@
 
 ## Base
 
-客户端: React 16 + Redux 4 + React Router 4 + Immutable 4
+客户端: React 16 + Redux 4 + React Router 4 + Immutable 4 + Ant Design Mobile 2
 
 服务端: Express 4 + MongoDB 3
 

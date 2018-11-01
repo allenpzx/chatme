@@ -8,13 +8,13 @@ export const getUser = dispatch => push => {
         if(res.status === 200){
             const islogin = (res.data.code === 1)
             if(islogin){
-                const {gender, avatar} = res.data.data;
                 dispatch({type: 'GET_USER_SUCCESS', payload: res.data});
-                // if(!avatar){
-                //     push(getRedirectPath(gender, avatar));
-                // }
+                const {gender, avatar} = res.data.data;
+                if(!avatar){
+                    push(getRedirectPath(gender, avatar));
+                }
             }else{
-                this.props.history.push('/login');
+                push('/login');
             }
         }
     })
@@ -78,4 +78,18 @@ export const register = dispatch => props => {
     .catch(err=>{
         dispatch(errorMsg(err.response.data.message));
     })
+}
+
+export const selectAvatar = dispatch => name => {
+    console.log('name', name);
+    // dispatch({type: 'SELECT_AVATAR_STAR', payload: {mesage: '选择头像开始'}});
+    // axios.get(`/select-avatar`)
+    // .then(res=>{
+    //     console.log(res);
+    //     dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: res.data});
+    // })
+    // .catch(err=>{
+    //     console.log(err);
+    //     dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: err.response});
+    // })   
 }

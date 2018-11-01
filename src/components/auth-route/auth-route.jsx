@@ -1,8 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import axios from 'axios';
-import {getRedirectPath} from '../../utils/getRedirectPath.js';
 import {getUser} from '../../store/actions/user.js';
 class AuthRoute extends React.Component{
     componentDidMount(){

@@ -54,12 +54,15 @@ Router.post('/register', function (req, res){
         if(doc){
             return res.json({code: 0, message: '该用户已注册'});
         }
-        const md5password = md5(password);
-        User.create({account, password: md5password, gender}, function (e, d){
-            if(e){
-                return res.json({code: 0, message: '注册用户服务端出错, 请稍后再试'})
+        const userModel = new User({account, gender, password: md5(password)});
+        userModel.save(function (e, d){
+            if (e) {
+                return res.json({code: 0, message: '服务端正忙, 请稍后重试'});
+            } else {
+                const {account, gender, _id} = d;
+                res.cookie('userid', _id);
+                return res.json({code: 1, data: {account, gender, _id}, message: '服务端正忙, 请稍后重试'});
             }
-            return res.json({code: 1, data: {account, password, gender}, message: '注册成功'})
         })
     });
 });

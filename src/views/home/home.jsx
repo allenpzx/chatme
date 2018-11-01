@@ -2,7 +2,6 @@ import React from 'react';
 import './home.css';
 import { connect } from 'react-redux';
 import * as fn from '../../store/actions/count.js';
-
 class Home extends React.Component {
   render() {
     return (
@@ -21,7 +20,6 @@ class Home extends React.Component {
 
         <hr/>
 
-        
       </div>
     );
   }

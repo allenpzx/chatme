@@ -1,5 +1,8 @@
+:root{
+    --speed: cubic-bezier(0.86, 0, 0.07, 1);
+}
+
 .fade-enter {
-    position: absolute;
     top: 0;
     z-index: 1;
     opacity: 0;
@@ -9,7 +12,7 @@
 .fade-enter.fade-enter-active {
     opacity: 1;
     transform: translateX(0);
-    transition: all 0.4s ease-out;
+    transition: all 0.4s var(--speed);
 }
 
 .fade-exit {
@@ -20,5 +23,5 @@
 .fade-exit-active {
     opacity: 0;
     transform: translateX(-100%);
-    transition: all 0.4s ease-out;
+    transition: all 0.4s var(--speed);
 }
