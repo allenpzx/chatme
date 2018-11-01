@@ -1,13 +1,18 @@
 import axios from 'axios';
+import {getRedirectPath} from '../../utils/getRedirectPath.js';
 
-export const getUser = dispatch => {
+export const getUser = dispatch => push => {
     dispatch({type: 'GET_USER_STAR', payload: {message: '获取用户模型开始'}});
     axios.get('/api/v1/user')
     .then(res=>{
         if(res.status === 200){
-            const islogin = res.data.code === 1
+            const islogin = (res.data.code === 1)
             if(islogin){
+                const {gender, avatar} = res.data.data;
                 dispatch({type: 'GET_USER_SUCCESS', payload: res.data});
+                // if(!avatar){
+                //     push(getRedirectPath(gender, avatar));
+                // }
             }else{
                 this.props.history.push('/login');
             }

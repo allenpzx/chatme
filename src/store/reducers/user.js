@@ -22,7 +22,7 @@ const user = (state = initialState, action) => {
                         ...action.payload
                     } 
         case 'GET_USER_ERROR':
-            return {...state, isAuth: false, message: action.payload.message}
+            return {...state, isAuth: false, ...action.payload}
 
         case 'REGISTER_STAR':
             return {...state, message: action.payload.message}

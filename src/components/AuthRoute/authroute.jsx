@@ -1,36 +1,25 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import { getUser } from '../../store/actions/user.js';
+import axios from 'axios';
+import {getRedirectPath} from '../../utils/getRedirectPath.js';
+import {getUser} from '../../store/actions/user.js';
 class AuthRoute extends React.Component{
-    state={
-        user: this.props.user
-    }
-    
     componentDidMount(){
         const publicList = ['/login', '/register'];
         const pathname = this.props.location.pathname;
         if(publicList.indexOf(pathname) > -1){
             return null
         }
-        this.props.getUser();
+        this.props.getUser(this.props.history.push);
     }
-
-    static getDerivedStateFromProps(props, state){
-        if(props.user !== state.user){
-            props.history.push(props.user.redirectTo);
-        }
-        return null
-    }
-
     render(){return null}
 }
-
 export default withRouter(connect(
-    state=>({
-        user: state.user
-    }),
+    null,
     dispatch=>({
-        getUser: ()=>getUser(dispatch)
+        getUser: push=>{
+            getUser(dispatch)(push);
+        }
     })
 )(AuthRoute));

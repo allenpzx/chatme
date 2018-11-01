@@ -10,7 +10,7 @@ class Mine extends React.Component {
     const path = this.props.location.pathname || null;
     const Man = () => <div>man</div>;
     const Women = () => <div>women</div>;
-    // console.log(this.props);
+    console.log(user);
     return (
       <div className="mine">
         <h3>Mine</h3> 
