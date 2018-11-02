@@ -9,7 +9,7 @@ let initialState = {
     account: null,
     gender: null,
     age: null,
-    discription: null,
+    description: null,
     wanna: null
 };
 
@@ -28,6 +28,7 @@ const user = (state = initialState, action) => {
         case 'GET_USER_ERROR':
             return {...state, isAuth: false, ...action.payload}
 
+
         case 'UPDATE_USER_START':
             return {...state, message: action.payload.message}
         case 'UPDATE_USER_SUCCESS':
@@ -35,11 +36,12 @@ const user = (state = initialState, action) => {
                         ...state, 
                         isAuth: true, 
                         redirectTo: getRedirectPath(action.payload.data), 
-                        message: '获取用户模型成功', 
+                        message: '更新用户信息成功', 
                         ...action.payload.data
                     } 
         case 'UPDATE_USER_ERROR':
             return {...state, isAuth: false, ...action.payload}
+
 
         case 'REGISTER_STAR':
             return {...state, message: action.payload.message}
@@ -52,7 +54,8 @@ const user = (state = initialState, action) => {
                         ...action.payload.data
                     }   
         case 'REGISTER_ERROR':        
-            return {...state, isAuth: false, message: action.payload.message}     
+            return {...state, isAuth: false, message: action.payload.message}  
+
             
         case 'LOGIN_STAR':
             return {...state, message: action.payload.message}
@@ -66,6 +69,7 @@ const user = (state = initialState, action) => {
                     }    
         case 'LOGIN_ERROR':        
             return {...state, isAuth: false, message: action.payload.message}
+
 
         default:
             return state

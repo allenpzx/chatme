@@ -80,31 +80,15 @@ export const register = dispatch => props => {
     })
 }
 
-export const updateAvatar = dispatch => name => {
-    dispatch({type: 'SELECT_AVATAR_STAR', payload: {mesage: '选择头像开始'}});
-    axios.get(`/select-avatar`)
-    .then(res=>{
-        console.log(res);
-        dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: res.data});
-    })
-    .catch(err=>{
-        console.log(err);
-        dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: err.response});
-    })
-}
-
 export const updateUser = dispatch => props => {
     dispatch({type: 'UPDATE_USER_STAR', payload: {mesage: '更新用户资料开始'}});
-    axios.get(`/user/update`)
+    axios.post(`/api/v1/user/update`, props)
     .then(res=>{
-        console.log(res);
-        if( res.status === 200 && res.code === 1){
-            console.log(res)
+        if( res.status === 200 && res.data.code === 1){
+            dispatch({type: 'UPDATE_USER_SUCCESS', payload: res.data});
         }
-        // dispatch({type: 'UPDATE_USER_SUCCESS', payload: res.data});
     })
     .catch(err=>{
-        console.log(err);
-        // dispatch({type: 'UPDATE_USER_SUCCESS', payload: err.response});
+        dispatch({type: 'UPDATE_USER_SUCCESS', payload: err.response});
     })
 }

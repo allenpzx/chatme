@@ -6,22 +6,30 @@ import { updateUser } from '../../store/actions/user.js';
 class PersonalInfo extends React.Component {
     constructor(props) {
         super(props)
-        const user = props.user || null;
+        const user = props.user;
+        console.log(user)
         this.state = {
-            avatar: user ? user.avatar ? user.avatar : null : null,
-            account: user ? user.account : '',
-            gender: user ? [this.props.user.gender] : null,
-            age: user ? [user.age?user.age:'18'] : '',
-            discription: user ? user.discription : '',
-            wanna: user ? user.wanna : ''
+            avatar: user && user.avatar ? user.avatar : null,
+            account: user && user.account ? user.account : null,
+            gender: user && user.gender ? [user.gender] : null,
+            age: user && user.age ? [user.age.toString()] : null,
+            description: user && user.description ? user.description : null,
+            wanna: user && user.wanna ? user.wanna : ''
         }
     }
 
     handleAccount = e => this.setState({ account: e });
     handleGender = e => this.setState({ gender: e });
     handleAge = e => this.setState({ age: e });
-    handleDiscription = e => this.setState({ discription: e });
+    handleDescription = e => this.setState({ description: e });
     handleWanna = e => this.setState({ wanna: e });
+    handleUpdate = () => {
+        const data = Object.assign({}, this.state, {
+            age: this.state.age[0],
+            gender: this.state.gender[0]
+        });
+        this.props.updateUser(data);
+    }
 
     render() {
         const user = this.props.user || null;
@@ -52,7 +60,7 @@ class PersonalInfo extends React.Component {
         for(let i = 18; i<101; i++){
             ageList.push({label: i.toString(), value: i.toString()});
         }
-
+        console.log('user', user, this.state);
         return (
             <React.Fragment>
                 <List renderHeader={() => gridHeader}>
@@ -95,10 +103,10 @@ class PersonalInfo extends React.Component {
                 <TextareaItem
                     autoHeight
                     title='简介'
-                    defaultValue={user && user.discription}
-                    value={this.state.discription}
-                    onChange={this.handleDiscription}
-                    onBlur={this.handleDiscription}
+                    defaultValue={user && user.description}
+                    value={this.state.description}
+                    onChange={this.handleDescription}
+                    onBlur={this.handleDescription}
                 />
                 <InputItem
                     defaultValue={user && user.wanna}
@@ -109,7 +117,7 @@ class PersonalInfo extends React.Component {
                 </List>
 
                 <WhiteSpace size="lg" />
-                <Button type='primary' size="small" onClick={() => this.props.updateUser(this.state)}>保存</Button>
+                <Button type='primary' size="small" onClick={this.handleUpdate}>保存</Button>
             </React.Fragment>
         )
     }
@@ -117,9 +125,9 @@ class PersonalInfo extends React.Component {
 
 export default connect(
     state => ({
-        user: state.user
+        user: state.user || null
     }),
     dispatch => ({
-        updateUser: props => console.log(props)
+        updateUser: props => updateUser(dispatch)(props)
     })
 )(PersonalInfo)
