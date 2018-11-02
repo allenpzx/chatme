@@ -6,22 +6,22 @@
     top: 0;
     z-index: 1;
     opacity: 0;
-    transform: translateX(100%);
+    /* transform: translateX(100%); */
 }
 
 .fade-enter.fade-enter-active {
     opacity: 1;
-    transform: translateX(0);
+    /* transform: translateX(0); */
     transition: all 0.4s var(--speed);
 }
 
 .fade-exit {
     opacity: 1;
-    transform: translateX(0);
+    /* transform: translateX(0); */
 }
 
 .fade-exit-active {
     opacity: 0;
-    transform: translateX(-100%);
-    transition: all 0.4s var(--speed);
+    /* transform: translateX(-100%); */
+    transition: all 0s var(--speed);
 }

@@ -80,16 +80,28 @@ export const register = dispatch => props => {
     })
 }
 
-export const selectAvatar = dispatch => name => {
-    console.log('name', name);
-    // dispatch({type: 'SELECT_AVATAR_STAR', payload: {mesage: '选择头像开始'}});
-    // axios.get(`/select-avatar`)
-    // .then(res=>{
-    //     console.log(res);
-    //     dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: res.data});
-    // })
-    // .catch(err=>{
-    //     console.log(err);
-    //     dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: err.response});
-    // })   
+export const updateAvatar = dispatch => name => {
+    dispatch({type: 'SELECT_AVATAR_STAR', payload: {mesage: '选择头像开始'}});
+    axios.get(`/select-avatar`)
+    .then(res=>{
+        console.log(res);
+        dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: res.data});
+    })
+    .catch(err=>{
+        console.log(err);
+        dispatch({type: 'SELECT_AVATAR_SUCCESS', payload: err.response});
+    })
+}
+
+export const updateUser = dispatch => props => {
+    dispatch({type: 'UPDATE_USER_STAR', payload: {mesage: '更新用户资料开始'}});
+    axios.get(`/update-user`)
+    .then(res=>{
+        console.log(res);
+        dispatch({type: 'UPDATE_USER_SUCCESS', payload: res.data});
+    })
+    .catch(err=>{
+        console.log(err);
+        dispatch({type: 'UPDATE_USER_SUCCESS', payload: err.response});
+    })
 }

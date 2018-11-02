@@ -4,6 +4,7 @@ import { withRouter, Route } from 'react-router-dom';
 import { Card, Picker, List, WhiteSpace } from 'antd-mobile';
 import BottomNav from "../../components/bottom-nav/bottom-nav.jsx";
 import AvatarSelector from '../../components/avatar-selector/avatar-selectot.jsx';
+import PersonalInfo from './personal-info.jsx';
 class Mine extends React.Component {
 
 
@@ -14,9 +15,11 @@ class Mine extends React.Component {
       <React.Fragment>
 
         <AvatarSelector />
-        
+
         <WhiteSpace size="lg" />
-        <Card full>
+
+        <PersonalInfo />
+        {/* <Card full>
           <Card.Header
             title="This is title"
             thumb="https://gw.alipayobjects.com/zos/rmsportal/MRhHctKOineMbKAZslML.jpg"
@@ -32,7 +35,7 @@ class Mine extends React.Component {
         <List className='' style={{}}>
           <List.Item arrow="horizontal">个人信息</List.Item>
           <List.Item arrow="horizontal">设置</List.Item>
-        </List>
+        </List> */}
 
       </React.Fragment>
     );
