@@ -8,7 +8,6 @@ export const getUser = dispatch => push => {
         if(res.status === 200){
             const islogin = (res.data.code === 1)
             if(islogin){
-                console.log(res.data)
                 dispatch({type: 'GET_USER_SUCCESS', payload: res.data});
                 const {gender, avatar} = res.data.data;
                 if(!avatar){
@@ -96,13 +95,16 @@ export const updateAvatar = dispatch => name => {
 
 export const updateUser = dispatch => props => {
     dispatch({type: 'UPDATE_USER_STAR', payload: {mesage: '更新用户资料开始'}});
-    axios.get(`/update-user`)
+    axios.get(`/user/update`)
     .then(res=>{
         console.log(res);
-        dispatch({type: 'UPDATE_USER_SUCCESS', payload: res.data});
+        if( res.status === 200 && res.code === 1){
+            console.log(res)
+        }
+        // dispatch({type: 'UPDATE_USER_SUCCESS', payload: res.data});
     })
     .catch(err=>{
         console.log(err);
-        dispatch({type: 'UPDATE_USER_SUCCESS', payload: err.response});
+        // dispatch({type: 'UPDATE_USER_SUCCESS', payload: err.response});
     })
 }

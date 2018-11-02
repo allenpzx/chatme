@@ -36,6 +36,23 @@ Router.get('/user', function (req, res){
     }
 });
 
+Router.get('/user/update', function (req, res){
+    const {userid} = req.cookies.userid;
+    if(!userid){
+        return json.dumps({code: 0, message: '未找到该用户请重新登录'});
+    }
+    const body = req.body;
+    User.findByIdAndUpdate(userid, body, function (err, doc){
+        if(err){
+            return res.json({code: 0, message: '更新失败, 请稍后重试'})
+        }
+        const data = Object.assign({}, {
+            account: doc.account,
+            gender: doc.gender
+        })
+    })
+});
+
 Router.post('/login', function (req, res){
     const {account, password} = req.body.data;
     User.findOne({account, password: md5(password)}, _filter, function (err, doc){
