@@ -13,7 +13,7 @@ class Main extends React.Component {
     return (
       <div className="Main">
 
-        <Header />
+        {/* <Header /> */}
 
         <TransitionGroup>
           <CSSTransition key={this.props.location.key} classNames="fade" timeout={300}>

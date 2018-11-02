@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Grid } from 'antd-mobile';
-import {selectAvatar} from '../../store/actions/user.js';
+import {updateAvatar} from '../../store/actions/user.js';
 
 class AvatarSelector extends React.Component{
     render(){
@@ -9,7 +9,7 @@ class AvatarSelector extends React.Component{
             icon: require(`./avatars/${x}.png`),
             text: x,
         }))
-        return <Grid data={avatarList} columnNum={5} onClick={ele=>this.props.selectAvatar(ele.text)} />
+        return <Grid data={avatarList} columnNum={5} onClick={ele=>this.props.updateAvatar(ele.text)} />
     }
 }
 
@@ -18,6 +18,6 @@ export default connect(
 
     }),
     dispatch=>({
-        selectAvatar: name=>selectAvatar(dispatch)(name)
+        updateAvatar: name=>updateAvatar(dispatch)(name)
     })
 )(AvatarSelector)

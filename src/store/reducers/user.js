@@ -13,12 +13,13 @@ const user = (state = initialState, action) => {
         case 'GET_USER_START':
             return {...state, message: action.payload.message}
         case 'GET_USER_SUCCESS':
+            console.log(state, action.payload)
             return {
                         ...state, 
                         isAuth: true, 
                         redirectTo: getRedirectPath(action.payload.data), 
                         message: '获取用户模型成功', 
-                        ...action.payload
+                        ...action.payload.data
                     } 
         case 'GET_USER_ERROR':
             return {...state, isAuth: false, ...action.payload}

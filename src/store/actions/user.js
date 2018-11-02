@@ -8,6 +8,7 @@ export const getUser = dispatch => push => {
         if(res.status === 200){
             const islogin = (res.data.code === 1)
             if(islogin){
+                console.log(res.data)
                 dispatch({type: 'GET_USER_SUCCESS', payload: res.data});
                 const {gender, avatar} = res.data.data;
                 if(!avatar){
