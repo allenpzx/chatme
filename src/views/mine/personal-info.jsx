@@ -6,16 +6,28 @@ import { updateUser } from '../../store/actions/user.js';
 class PersonalInfo extends React.Component {
     constructor(props) {
         super(props)
-        const user = props.user;
-        console.log(user)
         this.state = {
-            avatar: user && user.avatar ? user.avatar : null,
-            account: user && user.account ? user.account : null,
-            gender: user && user.gender ? [user.gender] : null,
-            age: user && user.age ? [user.age.toString()] : null,
-            description: user && user.description ? user.description : null,
-            wanna: user && user.wanna ? user.wanna : ''
+            avatar: this.props.user.avatar || null,
+            account: this.props.user.account || null,
+            gender: [this.props.user.gender] || null,
+            age: [this.props.user.age+''] || null,
+            description: this.props.user.description || null,
+            wanna: this.props.user.wanna || null
         }
+    }
+
+    static getDerivedStateFromProps (props, state){
+        if(!Object.is(props,state)){
+            return {
+                avatar: props.user.avatar,
+                account: props.user.account,
+                gender: [props.user.gender],
+                age: [props.user.age+''],
+                description: props.user.description,
+                wanna: props.user.wanna
+            }
+        }
+        return null
     }
 
     handleAccount = e => this.setState({ account: e });
@@ -60,7 +72,8 @@ class PersonalInfo extends React.Component {
         for(let i = 18; i<101; i++){
             ageList.push({label: i.toString(), value: i.toString()});
         }
-        console.log('user', user, this.state);
+        console.log('user', user);
+        console.log('state', this.state);
         return (
             <React.Fragment>
                 <List renderHeader={() => gridHeader}>
