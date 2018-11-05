@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabBar } from 'antd-mobile';
 import PropTypes from 'prop-types';
+import './bottom-nav.css';
 
 class BottomNav extends React.Component {
   constructor(props) {
@@ -17,16 +18,17 @@ class BottomNav extends React.Component {
     const { push } = this.props.history;
     const { pathname } = this.props.location;
     return (
-      <TabBar tabBarPosition={'bottom'}>
+      <TabBar style={{position: 'fixed', bottom: '0'}}>
         {data.map(x => (
           <TabBar.Item
-            key={x.title}
+            key={x.path}
             title={x.text}
             icon={{ uri: require(`./icon/${x.icon}.svg`) }}
             selectedIcon={{ uri: require(`./icon/${x.selectedIcon}.svg`) }}
-            selected={x.path === pathname}
+            selected={pathname.includes(x.path)}
             onPress={()=>push(x.path)}
-          />
+          >
+          </TabBar.Item>
         ))}
       </TabBar>
     );

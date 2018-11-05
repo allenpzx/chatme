@@ -2,7 +2,6 @@ import React from 'react';
 import {withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { login } from '../../store/actions/user.js';
-// import './login.css';
 import { Button } from 'antd-mobile';
 import LoginForm from '../../components/login/index.jsx';
 

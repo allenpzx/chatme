@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import count from './count.js';
 import user from './user.js';
+import ladies from './ladies.js';
+import gentleman from './gentleman.js';
 
 export default combineReducers({
-    count,
     user,
+    ladies,
+    gentleman
 })

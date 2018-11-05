@@ -13,10 +13,11 @@ const md5 = (str) => {
     return str;
 }
 
-Router.get('/user-list', function (req, res){
-    User.find({}, function (err, docs){
+Router.get('/user/list', function (req, res){
+    const {gender} = req.query;
+    User.find({gender}, _filter, function (err, docs){
         if(err)return console.log(err)
-        return res.json(docs);
+        return res.json({code: 1, data: docs, message: `获取${gender}成功`});
     });
 });
 

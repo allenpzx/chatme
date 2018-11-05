@@ -1,21 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { WhiteSpace } from 'antd-mobile';
+import { Switch, Route } from 'react-router-dom';
 import PersonalInfo from './personal-info.jsx';
+import Options from './options.jsx';
+import Settings from './settings.jsx';
 
 class Me extends React.Component {
   render() {
     return (
-      <React.Fragment>
-        <PersonalInfo />
-      </React.Fragment>
+      <Switch>
+        <Route exact path='/me' component={Options} />
+        <Route path='/me/info' component={PersonalInfo} />
+        <Route path='/me/settings' component={Settings} />
+      </Switch>
     );
   }
 }
-
-export default withRouter(connect(
-  state => ({
-    user: state.user
-  }),
-)(Me))
+export default Me
