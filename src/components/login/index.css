@@ -52,6 +52,7 @@
 .form-bottom{
     width: 100%;
     padding: 5px;
+    padding-left: 5%;
     margin-top: 10px;
     display: flex;
     justify-content: space-between;

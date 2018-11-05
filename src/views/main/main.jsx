@@ -1,13 +1,13 @@
 import React from 'react';
-import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 import './main.css';
-import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
+// import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
 import Home from '../home/home.jsx';
 import Message from '../message/message.jsx';
 import Mine from '../mine/mine.jsx';
 import { TransitionGroup, CSSTransition } from "react-transition-group";
-import { NavBar, Icon } from 'antd-mobile';
-import Header from '../../components/header/header.jsx';
+// import { NavBar, Icon } from 'antd-mobile';
+// import Header from '../../components/header/header.jsx';
 class Main extends React.Component {
   render() {
     return (
@@ -25,7 +25,7 @@ class Main extends React.Component {
           </CSSTransition>
         </TransitionGroup>
 
-        <BottomNav {...this.props} />
+        {/* <BottomNav {...this.props} /> */}
       </div>
     );
   }

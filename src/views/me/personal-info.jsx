@@ -16,20 +16,34 @@ class PersonalInfo extends React.Component {
         }
     }
 
-    static getDerivedStateFromProps (props, state){
-        if(!Object.is(props,state)){
-            return {
-                avatar: props.user.avatar,
-                account: props.user.account,
-                gender: [props.user.gender],
-                age: [props.user.age+''],
-                description: props.user.description,
-                wanna: props.user.wanna
-            }
+    // static getDerivedStateFromProps (props, state){
+    //     console.log('getDerivedStateFromProps')
+    //     if(!Object.is(props,state)){
+    //         console.log(props, state)
+    //         return {
+    //             ...state,
+    //             ...props.user,
+    //             // gender: [props.user.gender],
+    //             // age: [props.user.age+'']
+    //         }
+    //     }
+    //     return null
+    // }
+
+    componentWillReceiveProps(props){
+        if(props.user !== this.state){
+            this.setState({
+                avatar: props.user.avatar || null,
+                account: props.user.account || null,
+                gender: [props.user.gender] || null,
+                age: [props.user.age+''] || null,
+                description: props.user.description || null,
+                wanna: props.user.wanna || null
+            });
         }
-        return null
     }
 
+    handleAvatar = e => this.setState({avatar: e.icon});
     handleAccount = e => this.setState({ account: e });
     handleGender = e => this.setState({ gender: e });
     handleAge = e => this.setState({ age: e });
@@ -72,15 +86,14 @@ class PersonalInfo extends React.Component {
         for(let i = 18; i<101; i++){
             ageList.push({label: i.toString(), value: i.toString()});
         }
-        console.log('user', user);
-        console.log('state', this.state);
+
         return (
             <React.Fragment>
                 <List renderHeader={() => gridHeader}>
                     <Grid
                         data={avatarList}
                         columnNum={5}
-                        onClick={ele => this.setState({ avatar: ele.icon })}
+                        onClick={ele => this.handleAvatar(ele)}
                     />
                 </List>
                 <WhiteSpace size="lg" />
@@ -89,9 +102,10 @@ class PersonalInfo extends React.Component {
                 <InputItem
                     defaultValue={user && user.account}
                     clear
-                    state={this.state.account}
+                    value={this.state.account}
                     onChange={this.handleAccount}
                     onBlur={this.handleAccount}
+                    style={{textAlign: 'right'}}
                 >
                     用户名
                 </InputItem>
@@ -120,17 +134,19 @@ class PersonalInfo extends React.Component {
                     value={this.state.description}
                     onChange={this.handleDescription}
                     onBlur={this.handleDescription}
+                    style={{textAlign: 'right'}}
                 />
                 <InputItem
                     defaultValue={user && user.wanna}
                     value={this.state.wanna}
                     onChange={this.handleWanna}
                     onBlur={this.handleWanna}
+                    style={{textAlign: 'right'}}
                 >期望</InputItem>
                 </List>
 
                 <WhiteSpace size="lg" />
-                <Button type='primary' size="small" onClick={this.handleUpdate}>保存</Button>
+                <Button type='primary' style={{margin: '0 auto', width: '90%'}} onClick={this.handleUpdate}>保存</Button>
             </React.Fragment>
         )
     }

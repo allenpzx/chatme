@@ -65,7 +65,7 @@ const user = (state = initialState, action) => {
                         isAuth: true, 
                         redirectTo: getRedirectPath(action.payload.data), 
                         message: '登录成功', 
-                        ...action.payload
+                        ...action.payload.data
                     }    
         case 'LOGIN_ERROR':        
             return {...state, isAuth: false, message: action.payload.message}

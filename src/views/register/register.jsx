@@ -104,10 +104,10 @@ class Register extends React.Component {
                         ? <div className='registerError'>{user.message}</div>
                         : null
                     }
-                    <Button onClick={this.handleRegister} id='login-submit' type="primary">注册</Button>
+                    <Button onClick={this.handleRegister} className='login-submit' type="primary">注册</Button>
 
                     <div onClick={() => this.props.history.push('/login')} className='form-bottom'>
-                        <button>登录</button>
+                        <div>登录</div>
                     </div>
                 </div>
             </LoginFrom>

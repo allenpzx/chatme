@@ -2,7 +2,7 @@ import React from 'react';
 import {withRouter, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import { login } from '../../store/actions/user.js';
-import './login.css';
+// import './login.css';
 import { Button } from 'antd-mobile';
 import LoginForm from '../../components/login/index.jsx';
 
@@ -38,7 +38,7 @@ class Login extends React.Component {
                     : null
                 }
                 <div className='login-title'><h1>登录</h1></div>
-                <form id="login-form" action="/main">
+                <form className="login-form" action="/main">
                     <label htmlFor="account">
                         <span>账号: </span>
                         <input 
@@ -62,10 +62,10 @@ class Login extends React.Component {
                         ? <div className='registerError'>{user.message}</div>
                         : null
                     }
-                    <Button onClick={this.handleLogin} id='login-submit' type="primary">登录</Button>
+                    <Button onClick={this.handleLogin} className='login-submit' type="primary">登录</Button>
 
                     <div className='form-bottom'>
-                        <button onClick={()=>this.props.history.push('/register')}>注册</button>
+                        <div onClick={()=>this.props.history.push('/register')}>注册</div>
                     </div>
                 </form>
             </LoginForm>
