@@ -11,7 +11,6 @@ class MatchList extends React.Component {
 
     render() {
         const { matchList } = this.props;
-        console.log(matchList, this.props)
         return (
             <WingBlank>
                 {matchList instanceof Array && matchList.length > 0 && matchList.map(x => {

@@ -97,6 +97,5 @@ export const updateUser = dispatch => props => {
 export const logout = dispatch => push => {
     dispatch({type: 'LOGOUT_SUCCESS'});
     Cookies.remove('userid');
-    push('/');
     window.location.reload();
 }

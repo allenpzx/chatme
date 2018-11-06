@@ -18,7 +18,7 @@ class BottomNav extends React.Component {
     const { push } = this.props.history;
     const { pathname } = this.props.location;
     return (
-      <div>
+      <div style={{position: 'fixed', width: '100%', bottom: 0}}>
         <TabBar>
           {data.map(x => (
             <TabBar.Item
@@ -29,7 +29,7 @@ class BottomNav extends React.Component {
               selected={pathname.includes(x.path)}
               onPress={() => push(x.path)}
             >
-              <Route path={x.path} component={x.component} />
+              {/* <Route path={x.path} component={x.component} /> */}
             </TabBar.Item>
           ))}
         </TabBar>

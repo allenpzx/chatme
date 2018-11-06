@@ -47,12 +47,12 @@ class DashBoard extends React.Component {
         >
           {navList.find(x => pathname.includes(x.path)) ? navList.find(x => pathname.includes(x.path)).title : null}
         </NavBar>
-        {/* <Switch>
+        <Switch>
           {navList.map(x => (
             <Route key={x.path} path={x.path} component={x.component} />
           ))}
           <Redirect to='/match-list'/>
-        </Switch> */}
+        </Switch>
         <BottomNav {...this.props} data={navList} />
       </div>
     )
