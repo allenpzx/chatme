@@ -70,7 +70,9 @@ const user = (state = initialState, action) => {
         case 'LOGIN_ERROR':        
             return {...state, isAuth: false, message: action.payload.message}
 
-
+        case 'LOGOUT_SUCCESS':        
+            return {...state, isAuth: false, redirectTo: '/login'}
+            
         default:
             return state
     }

@@ -16,8 +16,6 @@ class AuthRoute extends React.Component{
 export default withRouter(connect(
     null,
     dispatch=>({
-        getUser: push=>{
-            getUser(dispatch)(push);
-        }
+        getUser: push=>getUser(dispatch)(push)
     })
 )(AuthRoute));

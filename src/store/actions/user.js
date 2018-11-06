@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {getRedirectPath} from '../../utils/getRedirectPath.js';
+import Cookies from 'js-cookie';
 
 export const getUser = dispatch => push => {
     dispatch({type: 'GET_USER_STAR', payload: {message: '获取用户模型开始'}});
@@ -91,4 +92,11 @@ export const updateUser = dispatch => props => {
     .catch(err=>{
         dispatch({type: 'UPDATE_USER_SUCCESS', payload: err.response});
     })
+}
+
+export const logout = dispatch => push => {
+    dispatch({type: 'LOGOUT_SUCCESS'});
+    Cookies.remove('userid');
+    push('/');
+    window.location.reload();
 }

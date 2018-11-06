@@ -1,6 +1,9 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom'
 import { connect } from 'react-redux';
-import { List, Button, WhiteSpace, Result, Icon, } from 'antd-mobile';
+import { List, WhiteSpace, Result, Modal } from 'antd-mobile';
+import {logout} from '../../store/actions/user.js';
+import Cookies from 'js-cookie';
 
 class Options extends React.Component {
 
@@ -24,7 +27,7 @@ class Options extends React.Component {
                 </List>
                 <WhiteSpace size='lg' />
                 <List>
-                    <List.Item onClick={() => this.props.logout()}>
+                    <List.Item onClick={() => this.props.logout(this.props.history.replace)}>
                         退出
                     </List.Item>
                 </List>
@@ -34,13 +37,16 @@ class Options extends React.Component {
     }
 }
 
-export default connect(
+export default withRouter(connect(
     state => ({
         user: state.user
     }),
     dispatch=>({
-        logout: () => {
-            console.log('logout')
+        logout: push => {
+            Modal.alert('注销', '确定退出登录吗???', [
+                { text: '取消', onPress: () => {} },
+                { text: '确定', onPress: () => logout(dispatch)(push) },
+            ])
         }
     })
-)(Options)
+)(Options))

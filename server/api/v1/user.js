@@ -15,21 +15,14 @@ const md5 = (str) => {
 
 Router.get('/user/match-list', function (req, res){
     const {userid} = req.cookies;
-    User.find({}, _filter, function (err, doc){
-        if(err)return console.log(err)
-        console.log('doc', doc)
+    User.findById(userid, _filter, function (err, doc){
+        if(err) return console.log(err)
+        const target = doc.gender === 'male' ? 'female' : 'male';
+        User.find({gender: target}, _filter, function (e, d){
+            if(e) return console.log(e)
+            return res.json({code: 1, data: d, message: `获取匹配${target}列表成功`})
+        })
     });
-    // const ret = props => {
-    //     User.find({}, _filter, function (err, doc){
-    //         if(err)return console.log(err)
-    //         console.log('doc', doc)
-    //     });
-    // }
-    // User.findById(userid, _filter, function (err, doc){
-    //     if(err)return console.log(err)
-    //     gender = doc.gender === 'male' ? 'female' : 'male';
-    //     ret(gender)
-    // });
 });
 
 Router.get('/user/list', function (req, res){
@@ -103,10 +96,10 @@ Router.post('/register', function (req, res){
 });
 
 Router.post('/logout', function (req, res){
-    const {account, password} = req.body.data;
-    User.findOne({account, password: md5(password)}, function (err, doc){
-        if(!doc){
-            return res.json({code: 0, message: '用户名或密码错误'});
+    const {userid} = req.cookies;
+    User.findById(userid, function (err, doc){
+        if(err){
+            return res.json({code: 0, message: '退出失败, 请重试'});
         }else{
             return res.json({code: 1, data: doc, message: '登录成功'});
         }
