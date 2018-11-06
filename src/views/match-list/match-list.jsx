@@ -17,7 +17,7 @@ class MatchList extends React.Component {
                     return (
                         <React.Fragment key={x.account}>
                             <WhiteSpace />
-                            <Card>
+                            <Card onClick={()=>this.props.history.push(`/chat/${x.name}`)}>
                                 <Card.Header
                                     title={x.account}
                                     thumb={x.avatar ? <img style={{width: '22px', height: '22px'}} src={x.avatar} /> : null}

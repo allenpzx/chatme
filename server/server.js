@@ -5,11 +5,21 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const userRouter = require('./api/v1/user.js');
 
+// work with express
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', function(socket){
+  console.log('socket is going', socket);
+  socket.on('sendmsg', function(data){
+    console.log('server', data);
+  })
+});
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use('/api/v1', userRouter);
 
-app.listen(port, function (){
+server.listen(port, function (){
   console.log(`express app is listented on port ${port}`); 
 });
 

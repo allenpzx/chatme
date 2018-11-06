@@ -1,8 +1,8 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { List, WhiteSpace, Result, Modal } from 'antd-mobile';
-import {logout} from '../../store/actions/user.js';
+import { logout } from '../../store/actions/user.js';
 import Cookies from 'js-cookie';
 
 class Options extends React.Component {
@@ -13,10 +13,18 @@ class Options extends React.Component {
             <React.Fragment>
                 <Result
                     img={user.avatar ? <img style={{ width: '100%', height: '100%' }} src={user.avatar} /> : null}
-                    title={user.account}
+                    title={user.name}
                     message={<div>{user.description}</div>}
                 />
-                <WhiteSpace size='lg'/>
+
+                <List renderHeader={() => '简介'} className="my-list">
+                    <List.Item multipleLine wrap>
+                            <List.Item.Brief>账号: {user.account}</List.Item.Brief>
+                            <List.Item.Brief>年龄: {user.age}</List.Item.Brief>
+                            <List.Item.Brief>性别: {user.gender}</List.Item.Brief>
+                    </List.Item>
+                </List>
+                <WhiteSpace size='lg' />                
                 <List>
                     <List.Item arrow="horizontal" multipleLine onClick={() => this.props.history.push('/me/info')}>
                         个人资料
@@ -41,10 +49,10 @@ export default withRouter(connect(
     state => ({
         user: state.user
     }),
-    dispatch=>({
+    dispatch => ({
         logout: push => {
             Modal.alert('注销', '确定退出登录吗???', [
-                { text: '取消', onPress: () => {} },
+                { text: '取消', onPress: () => { } },
                 { text: '确定', onPress: () => logout(dispatch)(push) },
             ])
         }
