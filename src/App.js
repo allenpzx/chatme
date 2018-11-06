@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Login from './views/login/login.jsx';
 import Register from './views/register/register.jsx';
 import AuthRoute from './components/auth-route/auth-route.jsx';

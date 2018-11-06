@@ -1,18 +1,16 @@
 import React from 'react';
 import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
-import { withRouter, Switch, Route } from 'react-router-dom';
+import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavBar, Icon } from 'antd-mobile';
 import Message from '../message/message.jsx';
-import Ladies from '../ladies/ladies.jsx';
-import Gentleman from '../gentleman/gentleman.jsx'
+import MatchList from '../match-list/match-list.jsx'
 import Me from '../me/me.jsx';
-// import './dashboard.css';
 class DashBoard extends React.Component {
 
   render() {
     const { pathname } = this.props.location;
-    const user = this.props.user;
+    // const user = this.props.user;
     const navList = [
       {
         path: '/msg',
@@ -23,22 +21,12 @@ class DashBoard extends React.Component {
         component: Message
       },
       {
-        path: '/ladies',
-        title: 'ladies',
+        path: '/match-list',
+        title: '有趣的朋友',
         text: '发现',
         icon: 'list',
         selectedIcon: '_list',
-        hidden: user.gender === 'female',
-        component: Ladies
-      },
-      {
-        path: '/gentleman',
-        title: 'gentleman',
-        text: '发现',
-        icon: 'list',
-        selectedIcon: '_list',
-        hidden: user.gender === 'male',
-        component: Gentleman
+        component: MatchList
       },
       {
         path: '/me',
@@ -51,25 +39,20 @@ class DashBoard extends React.Component {
     ]
 
     return (
-      <div className='dashboard' style={{
-        height: '100vh',
-        width: '100vw',
-        boxSizing: 'border-box',
-        overflowX: 'hidden',
-        overflowY: 'scroll'
-      }}>
+      <div className='dashboard'>
         <NavBar
           icon={this.props.history.length > 0 ? <Icon type="left" /> : null}
           onLeftClick={() => this.props.history.goBack()}
-          mode='light'
+          mode={'light'}
         >
-          {navList.find(x => x.path === pathname) ? navList.find(x => x.path === pathname).title : null}
+          {navList.find(x => pathname.includes(x.path)) ? navList.find(x => pathname.includes(x.path)).title : null}
         </NavBar>
-        <Switch>
+        {/* <Switch>
           {navList.map(x => (
             <Route key={x.path} path={x.path} component={x.component} />
           ))}
-        </Switch>
+          <Redirect to='/match-list'/>
+        </Switch> */}
         <BottomNav {...this.props} data={navList} />
       </div>
     )

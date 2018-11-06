@@ -13,6 +13,25 @@ const md5 = (str) => {
     return str;
 }
 
+Router.get('/user/match-list', function (req, res){
+    const {userid} = req.cookies;
+    User.find({}, _filter, function (err, doc){
+        if(err)return console.log(err)
+        console.log('doc', doc)
+    });
+    // const ret = props => {
+    //     User.find({}, _filter, function (err, doc){
+    //         if(err)return console.log(err)
+    //         console.log('doc', doc)
+    //     });
+    // }
+    // User.findById(userid, _filter, function (err, doc){
+    //     if(err)return console.log(err)
+    //     gender = doc.gender === 'male' ? 'female' : 'male';
+    //     ret(gender)
+    // });
+});
+
 Router.get('/user/list', function (req, res){
     const {gender} = req.query;
     User.find({gender}, _filter, function (err, docs){

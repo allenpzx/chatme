@@ -8,7 +8,7 @@ class PersonalInfo extends React.Component {
         super(props)
         this.state = {
             avatar: this.props.user.avatar || null,
-            account: this.props.user.account || null,
+            name: this.props.user.account || null,
             gender: [this.props.user.gender] || null,
             age: [this.props.user.age+''] || null,
             description: this.props.user.description || null,
@@ -34,7 +34,7 @@ class PersonalInfo extends React.Component {
         if(props.user !== this.state){
             this.setState({
                 avatar: props.user.avatar || null,
-                account: props.user.account || null,
+                name: props.user.name || null,
                 gender: [props.user.gender] || null,
                 age: [props.user.age+''] || null,
                 description: props.user.description || null,
@@ -44,7 +44,7 @@ class PersonalInfo extends React.Component {
     }
 
     handleAvatar = e => this.setState({avatar: e.icon});
-    handleAccount = e => this.setState({ account: e });
+    handleName = e => this.setState({ name: e });
     handleGender = e => this.setState({ gender: e });
     handleAge = e => this.setState({ age: e });
     handleDescription = e => this.setState({ description: e });
@@ -102,9 +102,9 @@ class PersonalInfo extends React.Component {
                 <InputItem
                     defaultValue={user && user.account}
                     clear
-                    value={this.state.account}
-                    onChange={this.handleAccount}
-                    onBlur={this.handleAccount}
+                    value={this.state.name}
+                    onChange={this.handleName}
+                    onBlur={this.handleName}
                     style={{textAlign: 'right'}}
                 >
                     用户名
@@ -147,6 +147,7 @@ class PersonalInfo extends React.Component {
 
                 <WhiteSpace size="lg" />
                 <Button type='primary' style={{margin: '0 auto', width: '90%'}} onClick={this.handleUpdate}>保存</Button>
+                <WhiteSpace size="lg" />
             </React.Fragment>
         )
     }

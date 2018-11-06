@@ -1,39 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Card, WingBlank, WhiteSpace } from 'antd-mobile';
-import getGentleman from '../../store/actions/gentleman.js';
+import getMatchList from '../../store/actions/match-list.js';
 
-class Gentleman extends React.Component {
+class MatchList extends React.Component {
 
     componentDidMount() {
-        this.props.getGentleman()
+        this.props.getMatchList()
     }
 
     render() {
-        const { gentleman } = this.props;
-        const ImgWrap = props => <div style={{width: '22px', height: '22px'}}>{this.props.children}</div>;
+        const { matchList } = this.props;
+        console.log(matchList, this.props)
         return (
             <WingBlank>
-                {gentleman instanceof Array && gentleman.length > 0 && gentleman.map(x => {
+                {matchList instanceof Array && matchList.length > 0 && matchList.map(x => {
                     return (
-                        x.avatar 
-                        ? 
-                        <React.Fragment>
+                        <React.Fragment key={x.account}>
                             <WhiteSpace />
                             <Card>
                                 <Card.Header
                                     title={x.account}
-                                    thumb={<img style={{width: '22px', height: '22px'}} src={x.avatar} />}
-                                    extra={<span>年龄: {x.age}</span>}
+                                    thumb={x.avatar ? <img style={{width: '22px', height: '22px'}} src={x.avatar} /> : null}
+                                    extra={<span>{x.gender}</span>}
                                 />
                                 <Card.Body>
                                     <div>{x.description ? x.description : null}</div>
                                 </Card.Body>
-                                <Card.Footer content={`${x.wanna ? x.wanna : null}`} />
+                                <Card.Footer content={x.wanna ? x.wanna : null} extra={<div>{x.age ? x.age : null}</div>} />
                             </Card>
                             <WhiteSpace />
                         </React.Fragment>
-                        : null
                     )
                 })}
             </WingBlank>
@@ -43,9 +40,9 @@ class Gentleman extends React.Component {
 
 export default connect(
     state => ({
-        gentleman: state.gentleman
+        matchList: state.matchList
     }),
     dispatch => ({
-        getGentleman: () => getGentleman(dispatch)
+        getMatchList: () => getMatchList(dispatch)
     })
-)(Gentleman)
+)(MatchList)

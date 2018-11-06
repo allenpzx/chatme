@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const DB_NAME = `chatme`;
 const DB_URL = `mongodb://localhost:27017`;
-mongoose.connect(`${DB_URL}${DB_NAME}`, { useNewUrlParser: true });
+mongoose.connect(`${DB_URL}/${DB_NAME}`, { useNewUrlParser: true });
 const db = mongoose.connection;
 
 const models = {
