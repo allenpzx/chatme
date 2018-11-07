@@ -18,6 +18,7 @@ Router.get('/user/match-list', function (req, res){
     const {userid} = req.cookies;
     User.findById(userid, _filter, function (err, doc){
         if(err) return console.log(err)
+        console.log(doc)
         const target = doc.gender === 'male' ? 'female' : 'male';
         User.find({gender: target}, _filter, function (e, d){
             if(e) return console.log(e)

@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {List, InputItem} from 'antd-mobile';
+import {NavBar, List, InputItem} from 'antd-mobile';
 import { getMessage, sendMessage, listenMessage } from '../../store/actions/chat.js';
+import './chat.css';
 
 import io from 'socket.io-client';
 const socket = io('ws://localhost:9093');
@@ -43,10 +44,44 @@ class Chat extends React.Component {
 
     render(){
         console.log(this.props)
+
+        const target_user = this.props.match.params.target;
+
+        const Opposite = props => <div style={{
+            margin: '10px ',
+            padding: '20px',
+            textAlign: 'left'
+        }}>对方发的: {props.children}</div>
+
+        const Self = props => <div style={{
+            margin: '10px ',
+            padding: '20px',
+            textAlign: 'right'
+        }}>我发的: {props.children}</div>
+
         return (
             <div className='chat-container'>
+
+                <NavBar mode='dark'>
+                    {target_user}
+                </NavBar>
+
+                {/* {this.props.chat.chatMessage.map(x=>{
+                    return x.from === target_user
+                        ? <Opposite key={x._id}>{x.content}</Opposite>
+                        : <Self key={x._id}>{x.content}</Self>
+                })} */}
                 {this.props.chat.chatMessage.map(x=>{
-                    return <p key={x._id}>{x.content}</p>
+                    return x.from === target_user
+                        ? (<List key={x._id}>
+                             <List.Item>{x.content}</List.Item> 
+                            </List>
+                        )
+                        :(
+                            <List key={x._id}>
+                             <List.Item className='message-me'>我发的： {x.content}</List.Item> 
+                            </List>
+                        );
                 })}
 
                 <div className="stick-footer" style={{
