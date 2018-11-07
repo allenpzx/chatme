@@ -2,6 +2,7 @@ const express = require('express');
 const Router = express.Router();
 const models = require('../../model.js');
 const User = models.getModel('user');
+const Chat  = models.getModel('chat');
 const crypto = require('crypto');
 const _filter = {"password": 0, "__v": 0};
 
@@ -24,6 +25,19 @@ Router.get('/user/match-list', function (req, res){
         })
     });
 });
+
+Router.get('/user/message-list', function (req, res){
+    const {userid} = req.cookies;
+    if(!userid){
+        res.json({code: 0, message: '暂无用户信息，请先登录'})
+    }
+    const condition = {'$or': [{from: userid, to: userid}]};
+    Chat.find({}, function(err, docs){
+        if(err) console.log('/user/message-list api error: ', err);
+        return res.json({code: 1, data: docs, message: '查询成功'});
+    });
+});
+
 
 Router.get('/user/list', function (req, res){
     const {gender} = req.query;
