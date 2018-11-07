@@ -2,7 +2,7 @@ import React from 'react';
 import { TabBar } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import './bottom-nav.css';
-import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
+// import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 class BottomNav extends React.Component {
   constructor(props) {
     super(props);

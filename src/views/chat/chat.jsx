@@ -45,9 +45,6 @@ class Chat extends React.Component {
         console.log(this.props)
         return (
             <div className='chat-container'>
-                {/* {this.state.message.map(x=>{
-                    return <p key={x}>{x}</p>
-                })} */}
                 {this.props.chat.chatMessage.map(x=>{
                     return <p key={x._id}>{x.content}</p>
                 })}

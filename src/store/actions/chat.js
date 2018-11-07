@@ -4,7 +4,8 @@ export const getMessage = dispatch => {
     dispatch({type: "GET_MESSAGE_START", payload: {}});
     axios.get('/api/v1/user/message-list')
     .then(res=>{
-        if(res.state === 200 && res.date.code === 1){
+        if(res.status === 200 && res.data.code === 1){
+            console.log('ceshi', res)
             dispatch({type: "GET_MESSAGE_SUCCESS", payload: res.data.data});
         }else{
             dispatch({type: 'GET_MESSAGE_ERROR', payload: res.data.message});

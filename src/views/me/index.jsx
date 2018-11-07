@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { List, WhiteSpace, Result, Modal } from 'antd-mobile';
 import { logout } from '../../store/actions/user.js';
-import Cookies from 'js-cookie';
 
 class Options extends React.Component {
 
@@ -12,7 +11,7 @@ class Options extends React.Component {
         return (
             <React.Fragment>
                 <Result
-                    img={user.avatar ? <img style={{ width: '100%', height: '100%' }} src={user.avatar} /> : null}
+                    img={user.avatar ? <img style={{ width: '100%', height: '100%' }} src={user.avatar} alt='avatar'/> : null}
                     title={user.name}
                     message={<div>{user.description}</div>}
                 />

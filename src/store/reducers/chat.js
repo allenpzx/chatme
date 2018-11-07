@@ -8,6 +8,7 @@ const chat = (state = initialState, action) => {
         case "GET_MESSAGE_START": 
             return state
         case "GET_MESSAGE_SUCCESS": 
+            console.log('get message success')
             return {...state, chatMessage: action.payload}
 
         case "LISTEN_MESSAGE":

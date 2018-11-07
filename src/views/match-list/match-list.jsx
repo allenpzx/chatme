@@ -29,7 +29,7 @@ class MatchList extends React.Component {
                             <Card onClick={()=>this.props.history.push(`/chat/${x._id}`)}>
                                 <Card.Header
                                     title={x.account}
-                                    thumb={x.avatar ? <img style={{width: '22px', height: '22px'}} src={x.avatar} /> : null}
+                                    thumb={x.avatar ? <img style={{width: '22px', height: '22px'}} src={x.avatar} alt='avatar'/> : null}
                                     extra={<span>{x.gender}</span>}
                                 />
                                 <Card.Body>
