@@ -1,16 +1,31 @@
 import React from 'react';
 import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
-import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavBar, Icon } from 'antd-mobile';
 import Message from '../message/message.jsx';
 import MatchList from '../match-list/match-list.jsx'
 import Me from '../me/me.jsx';
-class DashBoard extends React.Component {
+import { getMessage, listenMessage } from '../../store/actions/chat.js';
 
+@connect(
+  state => ({
+    user: state.user,
+    chat: state.chat
+  }),
+  dispatch=>({
+    getMessage: ()=>dispatch(getMessage()),
+    listenMessage: ()=>dispatch(listenMessage())
+  })
+)
+
+class DashBoard extends React.Component {
+  componentDidMount(){
+      this.props.getMessage();
+      this.props.listenMessage();
+  }
   render() {
     const { pathname } = this.props.location;
-    // const user = this.props.user;
     const navList = [
       {
         path: '/msg',
@@ -58,9 +73,4 @@ class DashBoard extends React.Component {
     )
   }
 }
-
-export default withRouter(connect(
-  state => ({
-    user: state.user
-  })
-)(DashBoard))
+export default DashBoard

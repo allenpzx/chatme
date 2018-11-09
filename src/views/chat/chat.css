@@ -1,4 +1,16 @@
-.message-me{
-    color: red;
+#chat-container .message-me .am-list-content{
+    padding-right: 15px;
     text-align: right;
+}
+
+#chat-container .message-me .am-list-extra{
+    flex-basis: auto;
+}
+
+#chat-container .am-grid-icon{
+    display: none;
+}
+
+#chat-container .am-grid-text{
+    margin-top: 0;
 }

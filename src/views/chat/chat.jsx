@@ -1,85 +1,93 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {NavBar, List, InputItem} from 'antd-mobile';
+import { connect } from 'react-redux';
+import { NavBar, List, InputItem, Icon, Grid } from 'antd-mobile';
 import { getMessage, sendMessage, listenMessage } from '../../store/actions/chat.js';
 import './chat.css';
 
-import io from 'socket.io-client';
-const socket = io('ws://localhost:9093');
-
+const emoji = `😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 😗 😙 😚 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤 😒 😓 😔 😕 🙃 🤑 😲 ☹️ 🙁 😖 😞 😟 😤 😢 😭 😦 😧 😨 😩 🤯 😬 😰 😱 😳 🤪 😵 😡 😠 🤬 😷 🤒 🤕 🤢 🤮 🤧 😇 🤠 🤡 🤥 🤫 🤭 🧐 🤓 😈 👿 👹 👺 💀 👻 👽 🤖 💩 😺 😸 😹 😻 😼 😽 🙀 😿 😾 `.split(' ').filter(v => v).map(x => ({ text: x }))
 @connect(
-    state=>({
+    state => ({
         user: state.user,
         chat: state.chat
     }),
-    dispatch=>({
-        getMessage: ()=>getMessage(dispatch),
-        sendMessage: props=>sendMessage(dispatch)(socket)(props),
-        listenMessage: ()=>listenMessage(dispatch)(socket)
+    dispatch => ({
+        getMessage: () => dispatch(getMessage()),
+        sendMessage: props => sendMessage(dispatch)(props),
+        listenMessage: () => listenMessage(dispatch)
     })
 )
 
 class Chat extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             input: '',
-            message: []
+            message: [],
+            showEmoji: false
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getMessage();
         this.props.listenMessage();
+    }
+
+    fixCarousel = () => {
+        // 解决ant-mobile Grid表情初始化显示的问题
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 0);
     }
 
     handleSubmit = () => {
         const from = this.props.user._id;
         const to = this.props.match.params.target;
         const message = this.state.input;
-        this.props.sendMessage({from, to, message});
-        this.setState({input: ''})
+        this.props.sendMessage({ from, to, message });
+        this.setState({ input: '' })
     }
 
-    render(){
-        console.log(this.props)
+    render() {
 
-        const target_user = this.props.match.params.target;
-
-        const Opposite = props => <div style={{
-            margin: '10px ',
-            padding: '20px',
-            textAlign: 'left'
-        }}>对方发的: {props.children}</div>
-
-        const Self = props => <div style={{
-            margin: '10px ',
-            padding: '20px',
-            textAlign: 'right'
-        }}>我发的: {props.children}</div>
+        const target_user_id = this.props.match.params.target;
+        const chat_users = this.props.chat.users;
+        const target = chat_users.find(x => (x._id === target_user_id));
+        const user = this.props.user;
+        const chat_id = [user._id, target_user_id].sort().join('_');
+        const chat_message = this.props.chat.chatMessage.filter(x => x.chatid === chat_id)
 
         return (
-            <div className='chat-container'>
+            <div id='chat-container'>
 
-                <NavBar mode='dark'>
-                    {target_user}
+                <NavBar
+                    mode="light"
+                    icon={<Icon type="left" />}
+                    onLeftClick={() => this.props.history.goBack()}
+                    rightContent={[
+                        <Icon key="1" type="ellipsis" />,
+                    ]}
+                >
+                    {target && target.name}
                 </NavBar>
 
-                {/* {this.props.chat.chatMessage.map(x=>{
-                    return x.from === target_user
-                        ? <Opposite key={x._id}>{x.content}</Opposite>
-                        : <Self key={x._id}>{x.content}</Self>
-                })} */}
-                {this.props.chat.chatMessage.map(x=>{
-                    return x.from === target_user
-                        ? (<List key={x._id}>
-                             <List.Item>{x.content}</List.Item> 
+                {chat_message.map(x => {
+                    return x.from === target_user_id
+                        ? (
+                            <List key={x._id}>
+                                <List.Item
+                                    thumb={target && <img src={target.avatar} alt='chat_avatar' />}
+                                >{x.content}</List.Item>
                             </List>
                         )
-                        :(
+                        : (
                             <List key={x._id}>
-                             <List.Item className='message-me'>我发的： {x.content}</List.Item> 
+                                <List.Item
+                                    className='message-me'
+                                    extra={user && <img src={user.avatar} alt='user_avatar' />}
+                                >
+                                    {x.content}
+                                </List.Item>
                             </List>
                         );
                 })}
@@ -93,11 +101,38 @@ class Chat extends React.Component {
                         <InputItem
                             placeholder='请输入'
                             value={this.state.input}
-                            onChange={v=>this.setState({input: v})}
-                            extra={<span onClick={this.handleSubmit}>发送</span>}
+                            onChange={v => this.setState({ input: v })}
+                            extra={
+                                <div>
+                                    <span
+                                        style={{
+                                            padding: '10px',
+                                            boxSizing: 'border-box'
+                                        }}
+                                        onClick={()=>{
+                                            this.setState({showEmoji: !this.state.showEmoji})
+                                            this.fixCarousel();
+                                     }}
+                                    >😆</span>
+                                    <span onClick={this.handleSubmit}>发送</span>
+                                </div>
+                            }
                         >
-                        </InputItem>    
-                    </List> 
+                        </InputItem>
+                    </List>
+                    {
+                        this.state.showEmoji
+                            ? <Grid
+                                data={emoji}
+                                columnNum={9}
+                                carouselMaxRow={4}
+                                isCarousel={true}
+                                onClick={el=>{
+                                    this.setState({input: this.state.input + ' ' + el.text})
+                                }}
+                            />
+                            : null
+                    }
                 </div>
             </div>
         )

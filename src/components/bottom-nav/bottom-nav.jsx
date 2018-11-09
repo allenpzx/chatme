@@ -2,7 +2,6 @@ import React from 'react';
 import { TabBar } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import './bottom-nav.css';
-// import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 class BottomNav extends React.Component {
   constructor(props) {
     super(props);
@@ -24,12 +23,12 @@ class BottomNav extends React.Component {
             <TabBar.Item
               key={x.path}
               title={x.text}
+              badge={x.path === '/msg' ? this.props.chat.unread : null}
               icon={{ uri: require(`./icon/${x.icon}.svg`) }}
               selectedIcon={{ uri: require(`./icon/${x.selectedIcon}.svg`) }}
               selected={pathname.includes(x.path)}
               onPress={() => push(x.path)}
             >
-              {/* <Route path={x.path} component={x.component} /> */}
             </TabBar.Item>
           ))}
         </TabBar>

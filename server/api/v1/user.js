@@ -18,7 +18,6 @@ Router.get('/user/match-list', function (req, res){
     const {userid} = req.cookies;
     User.findById(userid, _filter, function (err, doc){
         if(err) return console.log(err)
-        console.log(doc)
         const target = doc.gender === 'male' ? 'female' : 'male';
         User.find({gender: target}, _filter, function (e, d){
             if(e) return console.log(e)
@@ -32,10 +31,13 @@ Router.get('/user/message-list', function (req, res){
     if(!userid){
         res.json({code: 0, message: '暂无用户信息，请先登录'})
     }
-    const condition = {'$or': [{from: userid, to: userid}]};
-    Chat.find({}, function(err, docs){
+    let users = [];
+    User.find({}, _filter, function(err, docs){
+        users = docs;
+    });
+    Chat.find({'$or': [{from: userid}, {to: userid}]}, function(err, message){
         if(err) console.log('/user/message-list api error: ', err);
-        return res.json({code: 1, data: docs, message: '查询成功'});
+        return res.json({code: 1, data: {message, users, userid}, message: '查询成功'});
     });
 });
 

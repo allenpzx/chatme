@@ -5,7 +5,6 @@ import Register from './views/register/register.jsx';
 import AuthRoute from './components/auth-route/auth-route.jsx';
 import DashBoard from './views/dashboard/dashboard.jsx';
 import Chat from './views/chat/chat.jsx';
-
 class App extends React.Component {
   render() {
     return (
