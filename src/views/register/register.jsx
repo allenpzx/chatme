@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from "react-router-dom";
-import { Button } from 'antd-mobile';
+import { Button, WhiteSpace } from 'antd-mobile';
 import AuthForm from '../../components/auth-form/auth-form.js';
 class Register extends React.Component {
     componentDidMount(){
@@ -57,6 +57,8 @@ class Register extends React.Component {
                         ? <div className='registerError'>{user.message}</div>
                         : null
                     }
+                    <WhiteSpace size='lg' />
+
                     <Button onClick={this.props.handleRegister} className='login-submit' type="primary">注册</Button>
 
                     <div onClick={() => this.props.history.push('/login')} className='form-bottom'>

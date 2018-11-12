@@ -7,7 +7,12 @@ export default function withAuthForm(Component){
     class WrapperComponent extends React.Component {
         constructor(props){
             super(props);
-            this.state = {}
+            this.state = {
+                account: '',
+                password: '',
+                repeatPassword: '',
+                
+            }
         }
 
         handleChange = (key, v) => this.setState({[key]: v});
