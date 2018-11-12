@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { NavBar, List, InputItem, Icon, Grid } from 'antd-mobile';
-import { getMessage, sendMessage, listenMessage } from '../../store/actions/chat.js';
+import { getMessage, sendMessage, listenMessage, readMessage } from '../../store/actions/chat.js';
 import './chat.css';
 
 const emoji = `😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 😗 😙 😚 🙂 🤗 🤩 🤔 🤨 😐 😑 😶 🙄 😏 😣 😥 😮 🤐 😯 😪 😫 😴 😌 😛 😜 😝 🤤 😒 😓 😔 😕 🙃 🤑 😲 ☹️ 🙁 😖 😞 😟 😤 😢 😭 😦 😧 😨 😩 🤯 😬 😰 😱 😳 🤪 😵 😡 😠 🤬 😷 🤒 🤕 🤢 🤮 🤧 😇 🤠 🤡 🤥 🤫 🤭 🧐 🤓 😈 👿 👹 👺 💀 👻 👽 🤖 💩 😺 😸 😹 😻 😼 😽 🙀 😿 😾 `.split(' ').filter(v => v).map(x => ({ text: x }))
@@ -11,9 +11,10 @@ const emoji = `😀 😁 😂 🤣 😃 😄 😅 😆 😉 😊 😋 😎 😍 
         chat: state.chat
     }),
     dispatch => ({
-        getMessage: () => dispatch(getMessage()),
+        getMessage: target_user_id => dispatch(getMessage(target_user_id)),
         sendMessage: props => sendMessage(dispatch)(props),
-        listenMessage: () => listenMessage(dispatch)
+        listenMessage: () => listenMessage(dispatch),
+        readMessage: target=>dispatch(readMessage(target))
     })
 )
 
@@ -29,8 +30,14 @@ class Chat extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getMessage();
+        const target_user_id = this.props.match.params.target;
+        this.props.getMessage(target_user_id);
         this.props.listenMessage();
+    }
+
+    componentWillUnmount(){
+        const target_user_id = this.props.match.params.target;
+        this.props.readMessage(target_user_id)
     }
 
     fixCarousel = () => {
@@ -49,7 +56,6 @@ class Chat extends React.Component {
     }
 
     render() {
-
         const target_user_id = this.props.match.params.target;
         const chat_users = this.props.chat.users;
         const target = chat_users.find(x => (x._id === target_user_id));

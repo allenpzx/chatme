@@ -16,11 +16,23 @@ const chat = (state = initialState, action) => {
                 }
 
         case "LISTEN_MESSAGE":
-                const n = action.payload.data.to === action.payload.userid ? 1 : 0;
+            const n = action.payload.data.to === action.payload.userid ? 1 : 0;
             return {
                     ...state, 
                     chatMessage: [...state.chatMessage, action.payload.data], 
                     unread: state.unread+n
+                }
+
+        case "READE_MESSAGE_SUCCESS": 
+            return {
+                    ...state, 
+                    chatMessage: state.chatMessage.map(v=>{
+                        if(v.from === action.payload.target_user_id && v.to === action.payload.userid){
+                            return  {...v,read:true}
+                        }
+                        return v
+                    }),
+                    unread: state.unread - action.payload.read
                 }
 
         default: 

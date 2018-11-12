@@ -42,12 +42,15 @@ Router.get('/user/message-list', function (req, res){
 });
 
 
-Router.get('/user/list', function (req, res){
-    const {gender} = req.query;
-    User.find({gender}, _filter, function (err, docs){
-        if(err)return console.log(err)
-        return res.json({code: 1, data: docs, message: `获取${gender}成功`});
-    });
+Router.post('/user/read-message', function (req, res){
+    const {target_user_id} = req.body;
+    const {userid} = req.cookies;
+    Chat.updateMany({from: target_user_id, to: userid}, {read: true}, function (err, docs){
+        if(err){
+            return res.json({code: 0, message: '修改已读消息错误，请稍后再试'});
+        }
+        res.json({code: 1, read: docs.nModified, target_user_id, userid});
+    })
 });
 
 Router.get('/user', function (req, res){

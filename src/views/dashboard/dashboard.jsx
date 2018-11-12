@@ -1,13 +1,13 @@
 import React from 'react';
 import BottomNav from '../../components/bottom-nav/bottom-nav.jsx';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { withRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { NavBar, Icon } from 'antd-mobile';
 import Message from '../message/message.jsx';
 import MatchList from '../match-list/match-list.jsx'
 import Me from '../me/me.jsx';
 import { getMessage, listenMessage } from '../../store/actions/chat.js';
-
+@withRouter
 @connect(
   state => ({
     user: state.user,

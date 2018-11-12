@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {List} from 'antd-mobile';
+import {List, Badge} from 'antd-mobile';
 
 @connect(
   state=>({
@@ -10,7 +10,6 @@ import {List} from 'antd-mobile';
 )
 class Message extends React.Component {
   render() {
-    console.log(this.props)
     const users = this.props.chat.users;
     const userid = this.props.user._id;
     const messageGroup = {};
@@ -18,12 +17,14 @@ class Message extends React.Component {
       messageGroup[x.chatid] = messageGroup[x.chatid] || [];
       messageGroup[x.chatid].push(x);
     });
-    const chatList = Object.values(messageGroup);
+    const chatList = Object.values(messageGroup).sort((a, b)=>{
+      return b[b.length-1].create_time - a[a.length-1].create_time
+    });
+    
     return (
       <div className="message-container">
         <List>
           {chatList.map(x=>{
-            // console.log(x);
             const lastItem = x[x.length-1];
             const targetId = lastItem.from === userid ? lastItem.to : lastItem.from ;
             const target = users.find(x=>{
@@ -31,11 +32,15 @@ class Message extends React.Component {
                 return true
               }
             });
+            const unreadNum = x.filter(v=>!v.read&&v.to===userid).length;
 
             return (
               <List.Item 
-                thumb={<img src={target.avatar} alt={'chat_avatar'} />}
+                extra={<Badge text={unreadNum}></Badge>}
+                thumb={target.avatar?<img src={target.avatar} alt={'chat_avatar'} />:null}
                 key={x[x.length-1]._id}
+                arrow='horizontal'
+                onClick={()=>this.props.history.push(`/chat/${targetId}`)}
               >
                 {x[x.length-1].content}
                 <List.Item.Brief>
